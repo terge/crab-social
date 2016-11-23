@@ -1,4 +1,4 @@
-package vip.xioix.pojo;
+package vip.xioix.biz;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

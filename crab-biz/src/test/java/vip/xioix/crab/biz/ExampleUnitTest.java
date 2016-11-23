@@ -1,4 +1,4 @@
-package vip.xioix.pojo;
+package vip.xioix.crab.biz;
 
 import org.junit.Test;
 
