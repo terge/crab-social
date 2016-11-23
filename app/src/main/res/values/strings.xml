@@ -14,10 +14,14 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_main">螃蟹社交</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+    <string name="nav_conversation">聊天</string>
+    <string name="nav_friend">好友</string>
+    <string name="nav_timeline">圈子</string>
+    <string name="nav_setting">设置</string>
 </resources>
