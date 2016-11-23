@@ -1,3 +1,23 @@
 <resources>
     <string name="app_name">crab-social</string>
+    <string name="title_activity_login">登录</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">请输入手机号</string>
+    <string name="prompt_password">请输入密码</string>
+    <string name="action_sign_in">登录/注册</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_mobile">手机号无效</string>
+    <string name="error_invalid_password">密码太短啦</string>
+    <string name="error_incorrect_password">密码与账号不匹配</string>
+    <string name="error_field_required">必填项</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+    <string name="title_activity_main">MainActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
 </resources>
