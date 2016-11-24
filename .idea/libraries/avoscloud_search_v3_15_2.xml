@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="avoscloud-search-v3.15.2">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/crab-biz/build/intermediates/exploded-aar/cn.leancloud.android/avoscloud-search/v3.15.2/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/crab-biz/build/intermediates/exploded-aar/cn.leancloud.android/avoscloud-search/v3.15.2/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
