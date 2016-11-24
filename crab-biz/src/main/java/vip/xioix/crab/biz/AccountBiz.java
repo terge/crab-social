@@ -4,16 +4,16 @@ package vip.xioix.crab.biz;
  * Created by terge on 16-11-23.
  */
 
-public class Account {
+public class AccountBiz {
     private static class Holder{
-        public static Account INSTANCE  = new Account();
+        public static AccountBiz INSTANCE  = new AccountBiz();
     }
 
-    private Account(){
+    private AccountBiz(){
 
     }
 
-    public static Account getInstance(){
+    public static AccountBiz getInstance(){
         return Holder.INSTANCE;
     }
 

@@ -328,7 +328,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             for (String credential : DUMMY_CREDENTIALS) {
                 String[] pieces = credential.split(":");
                 if (pieces[0].equals(mMobile)) {
-                    // Account exists, return true if the password matches.
+                    // AccountBiz exists, return true if the password matches.
                     return pieces[1].equals(mPassword);
                 }
             }

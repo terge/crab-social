@@ -9,7 +9,7 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
-import vip.xioix.crab.biz.Account;
+import vip.xioix.crab.biz.AccountBiz;
 
 public class SplashActivity extends AppCompatActivity implements Animation.AnimationListener {
 
@@ -37,7 +37,7 @@ public class SplashActivity extends AppCompatActivity implements Animation.Anima
 
     @Override
     public void onAnimationEnd(Animation animation) {
-        boolean isAutoLogin = Account.getInstance().autoLogin();
+        boolean isAutoLogin = AccountBiz.getInstance().autoLogin();
         Class<? extends Activity> toActivity = isAutoLogin ? MainActivity.class : LoginActivity.class;
         startActivity(new Intent(SplashActivity.this, toActivity));
         finish();
