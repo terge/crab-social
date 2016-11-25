@@ -9,7 +9,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.SparseArray;
 import android.view.Menu;
@@ -19,7 +18,7 @@ import android.view.View;
 import vip.xioix.crab.fragment.AbsFg;
 import vip.xioix.crab.fragment.ConversationFg;
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends AbsActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     @Override

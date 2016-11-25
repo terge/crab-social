@@ -3,7 +3,6 @@ package vip.xioix.crab;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
@@ -11,7 +10,7 @@ import android.view.animation.AnimationUtils;
 
 import vip.xioix.crab.biz.AccountBiz;
 
-public class SplashActivity extends AppCompatActivity implements Animation.AnimationListener {
+public class SplashActivity extends AbsActivity implements Animation.AnimationListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
