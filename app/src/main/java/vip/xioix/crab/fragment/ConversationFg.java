@@ -4,6 +4,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import com.avos.avoscloud.im.v2.AVIMConversation;
 import com.avos.avoscloud.im.v2.AVIMException;
 import com.avos.avoscloud.im.v2.AVIMMessage;
 import com.avos.avoscloud.im.v2.callback.AVIMConversationQueryCallback;
+import com.google.common.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +23,7 @@ import java.util.List;
 import rx.Observable;
 import rx.Observer;
 import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
@@ -36,6 +39,12 @@ public class ConversationFg extends AbsFg {
     private RecyclerView rvConversation;
     private List<ConversationInfo> conversationList = new ArrayList<>();
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        fetConversationData();
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -44,9 +53,17 @@ public class ConversationFg extends AbsFg {
         return view;
     }
 
+    @Subscribe
+    private void fillRecyclerView(List<ConversationInfo> conversationInfos){
+        Log.d(TAG, "fillRecyclerView: ");
+        Adapter mAdapter = new Adapter(conversationInfos);
+        rvConversation.setAdapter(mAdapter);
+    }
+
    
 
-    private void getConversationData() {
+    private void fetConversationData() {
+        Log.d(TAG, "getConversationData:");
         Observable.create(
                 new Observable.OnSubscribe<List<AVIMConversation>>() {
                     @Override
@@ -68,8 +85,9 @@ public class ConversationFg extends AbsFg {
                 });
     }
 
-    private void initConversationList(List<AVIMConversation> converList){
-        Observable.from(converList)
+    private void initConversationList(List<AVIMConversation> avimConList){
+        Log.d(TAG, "initConversationList: ");
+        Observable.from(avimConList)
                 //getLastMessage
                 .map(new Func1<AVIMConversation, ConversationInfo>() {
                     @Override
@@ -84,12 +102,12 @@ public class ConversationFg extends AbsFg {
                         return info;
                     }
                 })
-
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ConversationInfo>() {
                     @Override
                     public void onCompleted() {
                         // TODO: 16-11-24 数据准备完毕，可以填充界面
-
+                        mEventBus.post(conversationList);
                     }
 
                     @Override
