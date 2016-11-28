@@ -305,12 +305,15 @@ public class LoginActivity extends AbsActivity implements LoaderCallbacks<Cursor
                 if(e == null){
                     //onLoginSuccess
                     mEventBus.post(avUser);
-                }else if (e.getCode() == AVException.USER_DOESNOT_EXIST) {
-                    register(mMobile, mPassword);
-                }else if(e.getCode() == AVException.USER_MOBILEPHONE_NOT_VERIFIED){
-                    toVerifyMobile(mMobile);
-                }else{
-                    showError(e.getMessage());
+                }else {
+                    showProgress(false);
+                    if (e.getCode() == AVException.USER_DOESNOT_EXIST) {
+                        register(mMobile, mPassword);
+                    }else if(e.getCode() == AVException.USER_MOBILEPHONE_NOT_VERIFIED){
+                        toVerifyMobile(mMobile);
+                    }else{
+                        showError(e.getMessage());
+                    }
                 }
             }
         });
@@ -356,7 +359,6 @@ public class LoginActivity extends AbsActivity implements LoaderCallbacks<Cursor
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode != REQUEST_CODE_VERIFY_MOBILE)return;
-        showProgress(false);
         if(resultCode == RESULT_OK){
             String mobile = mTvMobile.getText().toString();
             String password = mEtPassword.getText().toString();
