@@ -10,7 +10,6 @@ import android.content.Loader;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -26,6 +25,12 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVUser;
+import com.avos.avoscloud.LogInCallback;
+import com.avos.avoscloud.SignUpCallback;
+import com.google.common.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,10 +54,7 @@ public class LoginActivity extends AbsActivity implements LoaderCallbacks<Cursor
     private static final String[] DUMMY_CREDENTIALS = new String[]{
             "foo@example.com:hello", "bar@example.com:world"
     };
-    /**
-     * Keep track of the login task to ensure we can cancel it if requested.
-     */
-    private UserLoginTask mAuthTask = null;
+
 
     // UI references.
     private AutoCompleteTextView mTvMobile;
@@ -143,9 +145,6 @@ public class LoginActivity extends AbsActivity implements LoaderCallbacks<Cursor
      * errors are presented and no actual login attempt is made.
      */
     private void attemptLogin() {
-        if (mAuthTask != null) {
-            return;
-        }
 
         // Store values at the time of the login attempt.
         String mobile = mTvMobile.getText().toString();
@@ -155,10 +154,8 @@ public class LoginActivity extends AbsActivity implements LoaderCallbacks<Cursor
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserLoginTask(mobile, password);
-            mAuthTask.execute((Void) null);
             InputMethodUtil.hide(this,mBtnSign);
-
+            login(mobile,password);
         }
 
 
@@ -299,61 +296,73 @@ public class LoginActivity extends AbsActivity implements LoaderCallbacks<Cursor
         int IS_PRIMARY = 1;
     }
 
-    /**
-     * Represents an asynchronous login/registration task used to authenticate
-     * the user.
-     */
-    public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 
-        private final String mMobile;
-        private final String mPassword;
 
-        UserLoginTask(String mobile, String password) {
-            mMobile = mobile;
-            mPassword = password;
-        }
-
-        @Override
-        protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
-
-            try {
-                // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                return false;
-            }
-
-            for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mMobile)) {
-                    // AccountBiz exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
+    private void login(final String mMobile, final String mPassword) {
+        AVUser.loginByMobilePhoneNumberInBackground(mMobile, mPassword, new LogInCallback<AVUser>() {
+            @Override
+            public void done(AVUser avUser, AVException e) {
+                if(e == null){
+                    //onLoginSuccess
+                    mEventBus.post(avUser);
+                }else if (e.getCode() == AVException.USER_DOESNOT_EXIST) {
+                    register(mMobile, mPassword);
+                }else if(e.getCode() == AVException.USER_MOBILEPHONE_NOT_VERIFIED){
+                    toVerifyMobile(mMobile);
+                }else{
+                    showError(e.getMessage());
                 }
             }
+        });
 
-            // TODO: register the new account here.
-            return true;
-        }
 
-        @Override
-        protected void onPostExecute(final Boolean success) {
-            mAuthTask = null;
-            showProgress(false);
+    }
 
-            if (success) {
-                startActivity(new Intent(LoginActivity.this,MainActivity.class));
-                finish();
-            } else {
-                mEtPassword.setError(getString(R.string.error_incorrect_password));
-                mEtPassword.requestFocus();
+    @Subscribe
+    private void onLoginSuccess(AVUser user){
+        startActivity(new Intent(LoginActivity.this,MainActivity.class));
+        finish();
+    }
+
+    private static final int REQUEST_CODE_VERIFY_MOBILE = 0x01;
+    @Subscribe
+    private void onRegisterSuccess(String mobile) {
+        toVerifyMobile(mobile);
+    }
+
+
+    private void register(final String mMobile, String mPassword) {
+        AVUser user = new AVUser();
+        user.setMobilePhoneNumber(mMobile);
+        user.setPassword(mPassword);
+        user.signUpInBackground(new SignUpCallback() {
+            @Override
+            public void done(AVException e) {
+                if(e == null){
+                    //onSignUpSuccess
+                    mEventBus.post(mMobile);
+                }
             }
-        }
+        });
+    }
 
-        @Override
-        protected void onCancelled() {
-            mAuthTask = null;
-            showProgress(false);
+
+    private void toVerifyMobile(String mobile){
+        Intent intent = new Intent(this, VerifyMobileActivity.class);
+        intent.putExtra(VerifyMobileActivity.KEY_MOBILE, mobile);
+        startActivityForResult(intent, REQUEST_CODE_VERIFY_MOBILE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode != REQUEST_CODE_VERIFY_MOBILE)return;
+        showProgress(false);
+        if(resultCode == RESULT_OK){
+            String mobile = mTvMobile.getText().toString();
+            String password = mEtPassword.getText().toString();
+            login(mobile,password);
+        }else {
+            showError("验证失败");
         }
     }
 }

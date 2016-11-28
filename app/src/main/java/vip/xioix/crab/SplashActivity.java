@@ -8,7 +8,7 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
-import vip.xioix.crab.biz.AccountBiz;
+import com.avos.avoscloud.AVUser;
 
 public class SplashActivity extends AbsActivity implements Animation.AnimationListener {
 
@@ -30,18 +30,22 @@ public class SplashActivity extends AbsActivity implements Animation.AnimationLi
 
 
     @Override
-    public void onAnimationStart(Animation animation) {
-
+    public void onAnimationEnd(Animation animation) {
+        AVUser user = AVUser.getCurrentUser();
+        onAutoLoginResult(user != null);
     }
 
-    @Override
-    public void onAnimationEnd(Animation animation) {
-        boolean isAutoLogin = AccountBiz.getInstance().autoLogin();
-        Class<? extends Activity> toActivity = isAutoLogin ? MainActivity.class : LoginActivity.class;
+
+    private void onAutoLoginResult(boolean isSuccess){
+        Class<? extends Activity> toActivity = isSuccess ? MainActivity.class : LoginActivity.class;
         startActivity(new Intent(SplashActivity.this, toActivity));
         finish();
     }
 
+    @Override
+    public void onAnimationStart(Animation animation) {
+
+    }
     @Override
     public void onAnimationRepeat(Animation animation) {
 

@@ -24,4 +24,9 @@
     <string name="nav_friend">好友</string>
     <string name="nav_timeline">圈子</string>
     <string name="nav_setting">设置</string>
+    <string name="title_activity_verify_phone">验证手机</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="send_sms_captcha_desc">我们已经发送了验证码到你的手机</string>
+    <string name="prompt_smscode">请输入手机验证码</string>
+    <string name="btn_verify">确定</string>
 </resources>

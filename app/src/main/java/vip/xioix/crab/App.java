@@ -9,9 +9,15 @@ import com.avos.avoscloud.AVOSCloud;
  */
 
 public class App extends Application{
+
+    public static final boolean DEBUG  = true;
+
     @Override
     public void onCreate() {
         super.onCreate();
         AVOSCloud.initialize(this,"tgIKa9aNaLs975LMgMIOvt2A-gzGzoHsz","dsYRn3WhJdxFaDiV0HbHYHn3");
+        AVOSCloud.setDebugLogEnabled(true);
     }
+
+
 }

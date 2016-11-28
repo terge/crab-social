@@ -24,6 +24,7 @@ public class AccountBiz {
 
 
     public boolean autoLogin(){
+
         return true;
     }
     public AVUser getCurrentUser() {

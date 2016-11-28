@@ -1,6 +1,5 @@
 package vip.xioix.crab;
 
-import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -10,16 +9,24 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import rx.Observable;
+import rx.functions.Action1;
+import rx.functions.Func1;
 import vip.xioix.crab.fragment.AbsFg;
 import vip.xioix.crab.fragment.ConversationFg;
 
+import static android.R.attr.id;
+
 public class MainActivity extends AbsActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    SparseArray<AbsFg> fgList = new SparseArray<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,28 +86,71 @@ public class MainActivity extends AbsActivity
         return super.onOptionsItemSelected(item);
     }
 
-    SparseArray<AbsFg> fgList = new SparseArray<>();
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-        AbsFg fg = fgList.get(id);
-        if(fg == null) {
-            fg = createSelectFragment(id);
-            if(fg == null){
-                return true;
-            }
-        }
+    public boolean onNavigationItemSelected(final MenuItem item) {
+        Log.d(TAG, "onNavigationItemSelected: ");
 
-        fgList.append(id, fg);
-        showSelectFragment(fg);
-
+        Observable.just(item)
+                //当前item已经是选中状态，不做处理
+                .filter(new Func1<MenuItem, Boolean>() {
+                    @Override
+                    public Boolean call(MenuItem menuItem) {
+                        Log.d(TAG, "onNavigationItemSelected: 1");
+                        return !item.isChecked();
+                    }
+                })
+                //取出缓存中的Fragment
+                .map(new Func1<MenuItem, AbsFg>() {
+                    @Override
+                    public AbsFg call(MenuItem menuItem) {
+                        Log.d(TAG, "onNavigationItemSelected: 2");
+                        int id = item.getItemId();
+                        return fgList.get(id);
+                    }
+                })
+                //过滤掉当前fg与要显示的fg是同一个的情况
+                .filter(new Func1<AbsFg, Boolean>() {
+                    @Override
+                    public Boolean call(AbsFg absFg) {
+                        Log.d(TAG, "onNavigationItemSelected: 3");
+                        return absFg == null || getFragmentManager().findFragmentByTag(absFg.getClass().getSimpleName()) != absFg;
+                    }
+                })
+                //创建新的fg
+                .map(new Func1<AbsFg, AbsFg>() {
+                    @Override
+                    public AbsFg call(AbsFg absFg) {
+                        Log.d(TAG, "onNavigationItemSelected: 4");
+                        if (absFg == null) {
+                            absFg = createSelectFragment(item.getItemId());
+                        }
+                        return absFg;
+                    }
+                })
+                //过滤掉null
+                .filter(new Func1<AbsFg, Boolean>() {
+                    @Override
+                    public Boolean call(AbsFg absFg) {
+                        Log.d(TAG, "onNavigationItemSelected: 5");
+                        return absFg != null;
+                    }
+                })
+                //展示fg
+                .subscribe(new Action1<AbsFg>() {
+                    @Override
+                    public void call(AbsFg absFg) {
+                        Log.d(TAG, "onNavigationItemSelected: 6");
+                        fgList.append(id, absFg);
+                        showSelectFragment(absFg);
+                    }
+                });
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
     private void showSelectFragment(AbsFg fg) {
+        Log.d(TAG, "showSelectFragment: ");
         // Create fragment and give it an argument specifying the article it should show
         Bundle args = new Bundle();
         //        args.putInt(ArticleFragment.ARG_POSITION, position);
@@ -109,7 +159,7 @@ public class MainActivity extends AbsActivity
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         // Replace whatever is in the fragment_container view with this fragment,
         // and add the transaction to the back stack so the user can navigate back
-        transaction.replace(R.id.content_main, fg);
+        transaction.replace(R.id.content_main, fg, fg.getClass().getSimpleName());
         transaction.addToBackStack(null);
 
         // Commit the transaction
@@ -117,9 +167,8 @@ public class MainActivity extends AbsActivity
     }
 
     private AbsFg createSelectFragment(int id) {
-        AbsFg fg =null;
+        AbsFg fg = null;
 
-        Class<?extends Fragment> clz = ConversationFg.class;
         if (id == R.id.nav_conversation) {
             fg = new ConversationFg();
         } else if (id == R.id.nav_friends) {
@@ -133,6 +182,7 @@ public class MainActivity extends AbsActivity
         } else if (id == R.id.nav_send) {
 
         }
+        Log.d(TAG, "createSelectFragment: id:"+id +" fg:"+(fg==null?null:fg.getClass().getSimpleName()));
         return fg;
     }
 }

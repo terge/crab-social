@@ -5,6 +5,8 @@ import android.content.Context;
 
 import com.google.common.eventbus.EventBus;
 
+import vip.xioix.crab.AbsActivity;
+
 /**
  * Created by terge on 16-11-23.
  */
@@ -19,5 +21,9 @@ public class AbsFg extends Fragment{
         mContext = context;
         mEventBus = new EventBus(TAG);
         mEventBus.register(this);
+    }
+
+    protected AbsActivity getAbsActivity(){
+        return (AbsActivity) mContext;
     }
 }

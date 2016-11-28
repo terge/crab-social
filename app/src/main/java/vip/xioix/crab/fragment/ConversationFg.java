@@ -54,13 +54,15 @@ public class ConversationFg extends AbsFg {
     }
 
     @Subscribe
-    private void fillRecyclerView(List<ConversationInfo> conversationInfos){
+    private void fillRecyclerView(List<ConversationInfo> conversationInfos) {
         Log.d(TAG, "fillRecyclerView: ");
+        if (conversationInfos == null || conversationInfos.size() == 0) {
+            return;
+        }
         Adapter mAdapter = new Adapter(conversationInfos);
         rvConversation.setAdapter(mAdapter);
     }
 
-   
 
     private void fetConversationData() {
         Log.d(TAG, "getConversationData:");
@@ -71,6 +73,10 @@ public class ConversationFg extends AbsFg {
                         ConversationBiz.getInstance().getConversationQuery().findInBackground(new AVIMConversationQueryCallback() {
                             @Override
                             public void done(List<AVIMConversation> list, AVIMException e) {
+                                if (e != null) {
+                                    getAbsActivity().showError(e.getLocalizedMessage());
+                                    return;
+                                }
                                 subscriber.onNext(list);
                             }
                         });
@@ -80,12 +86,16 @@ public class ConversationFg extends AbsFg {
                 .subscribe(new Action1<List<AVIMConversation>>() {
                     @Override
                     public void call(List<AVIMConversation> converList) {
+                        if (converList == null) {
+                            getAbsActivity().showError("无会话");
+                            return;
+                        }
                         initConversationList(converList);
                     }
                 });
     }
 
-    private void initConversationList(List<AVIMConversation> avimConList){
+    private void initConversationList(List<AVIMConversation> avimConList) {
         Log.d(TAG, "initConversationList: ");
         Observable.from(avimConList)
                 //getLastMessage
@@ -122,8 +132,6 @@ public class ConversationFg extends AbsFg {
                 });
     }
 
-    
-    
 
     class Adapter extends RecyclerView.Adapter {
         List<ConversationInfo> mData;
