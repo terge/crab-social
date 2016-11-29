@@ -14,18 +14,13 @@ import java.util.Arrays;
  */
 
 public class ConversationBiz {
+
     private static class Holder{
         public static ConversationBiz INSTANCE  = new ConversationBiz();
     }
 
     private ConversationBiz(){
-        mClient.open(new AVIMClientCallback() {
-            @Override
-            public void done(AVIMClient avimClient, AVIMException e) {
-                // TODO: 16-11-24 Only mClient opened,can do other conversation staff
-                mClient = avimClient;
-            }
-        });
+
     }
 
     public static ConversationBiz getInstance(){
@@ -33,20 +28,24 @@ public class ConversationBiz {
     }
 
 
+
     private AVUser curUser = AccountBiz.getInstance().getCurrentUser();
     private  AVIMClient mClient = AVIMClient.getInstance(curUser.getObjectId());
 
     /**
      * 获取当前用户所有的回话列表
+     * 默认是最近10条
      * @param callback
      */
-    public void getMyConversationList(AVIMConversationQueryCallback callback){
-        AVIMConversationQuery query = mClient.getQuery();
-        query.containsMembers(Arrays.asList(curUser.getObjectId()));
-        query.findInBackground(callback);
-    }
-
-    public AVIMConversationQuery getConversationQuery(){
-        return mClient.getQuery();
+    public void getMyConversationList(final AVIMConversationQueryCallback callback){
+        mClient.open(new AVIMClientCallback() {
+            @Override
+            public void done(AVIMClient avimClient, AVIMException e) {
+                mClient = avimClient;
+                AVIMConversationQuery query = mClient.getQuery();
+                query.containsMembers(Arrays.asList(curUser.getObjectId()));
+                query.findInBackground(callback);
+            }
+        });
     }
 }

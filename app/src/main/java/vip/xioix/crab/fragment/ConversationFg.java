@@ -3,6 +3,7 @@ package vip.xioix.crab.fragment;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -57,10 +58,12 @@ public class ConversationFg extends AbsFg {
     private void fillRecyclerView(List<ConversationInfo> conversationInfos) {
         Log.d(TAG, "fillRecyclerView: ");
         if (conversationInfos == null || conversationInfos.size() == 0) {
+            getAbsActivity().showError("列表为空");
             return;
         }
         Adapter mAdapter = new Adapter(conversationInfos);
         rvConversation.setAdapter(mAdapter);
+        rvConversation.setLayoutManager(new LinearLayoutManager(getAbsActivity()));
     }
 
 
@@ -70,7 +73,8 @@ public class ConversationFg extends AbsFg {
                 new Observable.OnSubscribe<List<AVIMConversation>>() {
                     @Override
                     public void call(final Subscriber<? super List<AVIMConversation>> subscriber) {
-                        ConversationBiz.getInstance().getConversationQuery().findInBackground(new AVIMConversationQueryCallback() {
+
+                        ConversationBiz.getInstance().getMyConversationList(new AVIMConversationQueryCallback() {
                             @Override
                             public void done(List<AVIMConversation> list, AVIMException e) {
                                 if (e != null) {
@@ -99,6 +103,18 @@ public class ConversationFg extends AbsFg {
         Log.d(TAG, "initConversationList: ");
         Observable.from(avimConList)
                 //getLastMessage
+                .filter(new Func1<AVIMConversation, Boolean>() {
+                    @Override
+                    public Boolean call(AVIMConversation avimConversation) {
+                        return avimConversation !=null;
+                    }
+                })
+                .filter(new Func1<AVIMConversation, Boolean>() {
+                    @Override
+                    public Boolean call(AVIMConversation avimConversation) {
+                        return avimConversation.getLastMessage() != null;
+                    }
+                })
                 .map(new Func1<AVIMConversation, ConversationInfo>() {
                     @Override
                     public ConversationInfo call(AVIMConversation avimConversation) {
@@ -122,7 +138,8 @@ public class ConversationFg extends AbsFg {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        Log.e(TAG, "onError: ", e);
+                        getAbsActivity().showError(e.getLocalizedMessage());
                     }
 
                     @Override

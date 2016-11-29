@@ -95,7 +95,6 @@ public class MainActivity extends AbsActivity
                 .filter(new Func1<MenuItem, Boolean>() {
                     @Override
                     public Boolean call(MenuItem menuItem) {
-                        Log.d(TAG, "onNavigationItemSelected: 1");
                         return !item.isChecked();
                     }
                 })
@@ -103,7 +102,6 @@ public class MainActivity extends AbsActivity
                 .map(new Func1<MenuItem, AbsFg>() {
                     @Override
                     public AbsFg call(MenuItem menuItem) {
-                        Log.d(TAG, "onNavigationItemSelected: 2");
                         int id = item.getItemId();
                         return fgList.get(id);
                     }
@@ -112,7 +110,6 @@ public class MainActivity extends AbsActivity
                 .filter(new Func1<AbsFg, Boolean>() {
                     @Override
                     public Boolean call(AbsFg absFg) {
-                        Log.d(TAG, "onNavigationItemSelected: 3");
                         return absFg == null || getFragmentManager().findFragmentByTag(absFg.getClass().getSimpleName()) != absFg;
                     }
                 })
@@ -120,7 +117,6 @@ public class MainActivity extends AbsActivity
                 .map(new Func1<AbsFg, AbsFg>() {
                     @Override
                     public AbsFg call(AbsFg absFg) {
-                        Log.d(TAG, "onNavigationItemSelected: 4");
                         if (absFg == null) {
                             absFg = createSelectFragment(item.getItemId());
                         }
@@ -131,7 +127,6 @@ public class MainActivity extends AbsActivity
                 .filter(new Func1<AbsFg, Boolean>() {
                     @Override
                     public Boolean call(AbsFg absFg) {
-                        Log.d(TAG, "onNavigationItemSelected: 5");
                         return absFg != null;
                     }
                 })
@@ -139,7 +134,6 @@ public class MainActivity extends AbsActivity
                 .subscribe(new Action1<AbsFg>() {
                     @Override
                     public void call(AbsFg absFg) {
-                        Log.d(TAG, "onNavigationItemSelected: 6");
                         fgList.append(id, absFg);
                         showSelectFragment(absFg);
                     }
@@ -182,7 +176,7 @@ public class MainActivity extends AbsActivity
         } else if (id == R.id.nav_send) {
 
         }
-        Log.d(TAG, "createSelectFragment: id:"+id +" fg:"+(fg==null?null:fg.getClass().getSimpleName()));
+        Log.d(TAG, "createSelectFragment: id:" + id + " fg:" + (fg == null ? null : fg.getClass().getSimpleName()));
         return fg;
     }
 }

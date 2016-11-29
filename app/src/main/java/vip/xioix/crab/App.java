@@ -41,7 +41,7 @@ public class App extends Application{
             public void onDataReceived(JSONObject jsonObject) {
                 if(jsonObject == null) return;
                 Iterator<String> iterator = jsonObject.keys();
-                String key = null;
+                String key ;
                 RemoteConfig remoteConfig = new RemoteConfig();
                 while(iterator.hasNext()){
                     key = iterator.next();
