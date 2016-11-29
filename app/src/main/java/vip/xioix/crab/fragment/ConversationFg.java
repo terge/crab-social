@@ -1,5 +1,6 @@
 package vip.xioix.crab.fragment;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -28,6 +30,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
+import vip.xioix.crab.ChatActivity;
 import vip.xioix.crab.R;
 import vip.xioix.crab.biz.ConversationBiz;
 
@@ -35,7 +38,7 @@ import vip.xioix.crab.biz.ConversationBiz;
  * Created by terge on 16-11-23.
  */
 
-public class ConversationFg extends AbsFg {
+public class ConversationFg extends AbsFg implements AdapterView.OnItemClickListener{
 
     private RecyclerView rvConversation;
     private List<ConversationInfo> conversationList = new ArrayList<>();
@@ -147,6 +150,14 @@ public class ConversationFg extends AbsFg {
                         conversationList.add(conversationInfo);
                     }
                 });
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        String conId = conversationList.get(position).id;
+        Intent intent = new Intent(mContext, ChatActivity.class);
+        intent.putExtra(ChatActivity.CONVERSATION_ID,conId);
+        startActivity(intent);
     }
 
 

@@ -1,5 +1,6 @@
 package vip.xioix.crab;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.os.Looper;
 import android.support.annotation.Nullable;
@@ -16,9 +17,11 @@ import com.google.common.eventbus.EventBus;
 public class AbsActivity extends AppCompatActivity {
     protected final String TAG = getClass().getSimpleName();
     protected EventBus mEventBus;
+    protected Activity mActivity;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mActivity = this;
         mEventBus = new EventBus(TAG);
         mEventBus.register(this);
     }
