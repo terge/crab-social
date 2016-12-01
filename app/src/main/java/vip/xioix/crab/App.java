@@ -6,6 +6,7 @@ import android.content.Intent;
 import com.avos.avoscloud.AVAnalytics;
 import com.avos.avoscloud.AVOSCloud;
 import com.avos.avoscloud.AVOnlineConfigureListener;
+import com.avos.avoscloud.AVUser;
 
 import org.json.JSONObject;
 
@@ -58,6 +59,7 @@ public class App extends Application{
     }
 
     public void logout(){
+        AVUser.logOut();
         Intent intent = new Intent(this,LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
