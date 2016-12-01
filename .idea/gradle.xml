@@ -11,7 +11,6 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/chatkit" />
             <option value="$PROJECT_DIR$/crab-base" />
-            <option value="$PROJECT_DIR$/crab-biz" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

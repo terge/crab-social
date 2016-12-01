@@ -1,1 +1,1 @@
-include ':app', ':crab-biz', ':chatkit', ':crab-base'
+include ':app', ':chatkit', ':crab-base'
