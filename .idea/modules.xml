@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/chatkit/chatkit.iml" filepath="$PROJECT_DIR$/chatkit/chatkit.iml" />
+      <module fileurl="file://$PROJECT_DIR$/crab-base/crab-base.iml" filepath="$PROJECT_DIR$/crab-base/crab-base.iml" />
       <module fileurl="file://$PROJECT_DIR$/crab-biz/crab-biz.iml" filepath="$PROJECT_DIR$/crab-biz/crab-biz.iml" />
       <module fileurl="file://$PROJECT_DIR$/crab-social.iml" filepath="$PROJECT_DIR$/crab-social.iml" />
     </modules>
