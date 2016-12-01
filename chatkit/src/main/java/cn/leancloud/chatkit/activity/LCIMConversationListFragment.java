@@ -5,11 +5,16 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.avos.avoscloud.AVUser;
+import com.avos.avoscloud.im.v2.AVIMClient;
 import com.avos.avoscloud.im.v2.AVIMConversation;
+import com.avos.avoscloud.im.v2.AVIMException;
+import com.avos.avoscloud.im.v2.callback.AVIMClientCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -96,14 +101,24 @@ public class LCIMConversationListFragment extends Fragment {
    * 刷新页面
    */
   private void updateConversationList() {
-    List<String> convIdList = LCIMConversationItemCache.getInstance().getSortedConversationList();
-    List<AVIMConversation> conversationList = new ArrayList<>();
-    for (String convId : convIdList) {
-      conversationList.add(LCChatKit.getInstance().getClient().getConversation(convId));
-    }
+    String id = AVUser.getCurrentUser().getObjectId();
+    LCChatKit.getInstance().open(id, new AVIMClientCallback() {
+      @Override
+      public void done(AVIMClient avimClient, AVIMException e) {
+        if (null != e) {
+          Log.e("ConversationFragment", "done: ", e);
+        }else {
+          List<String> convIdList = LCIMConversationItemCache.getInstance().getSortedConversationList();
+          List<AVIMConversation> conversationList = new ArrayList<>();
+          for (String convId : convIdList) {
+            conversationList.add(LCChatKit.getInstance().getClient().getConversation(convId));
+          }
 
-    itemAdapter.setDataList(conversationList);
-    itemAdapter.notifyDataSetChanged();
+          itemAdapter.setDataList(conversationList);
+          itemAdapter.notifyDataSetChanged();
+        }
+      }
+    });
   }
 
   /**

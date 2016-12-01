@@ -11,6 +11,9 @@ import org.json.JSONObject;
 
 import java.util.Iterator;
 
+import cn.leancloud.chatkit.UserProvider;
+import cn.leancloud.chatkit.LCChatKit;
+
 /**
  * Created by terge on 16-11-23.
  */
@@ -29,7 +32,10 @@ public class App extends Application{
         RemoteConfig remoteConfig = new RemoteConfig();
         String appId = remoteConfig.get(RemoteConfig.Key.AVOS_APP_ID,AVOS_APP_ID);
         String appKey = remoteConfig.get(RemoteConfig.Key.AVOS_APP_KEY,AVOS_APP_KEY);
-        AVOSCloud.initialize(this,appId,appKey);
+
+        LCChatKit.getInstance().setProfileProvider(new UserProvider());
+        LCChatKit.getInstance().init(appContext,appId,appKey);
+//        AVOSCloud.initialize(this,appId,appKey);
         AVOSCloud.setDebugLogEnabled(true);
         refreshRemoteConfig();
     }

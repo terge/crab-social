@@ -1,10 +1,11 @@
 package vip.xioix.crab;
 
-import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -15,18 +16,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import cn.leancloud.chatkit.activity.LCIMContactFragment;
+import cn.leancloud.chatkit.activity.LCIMConversationListFragment;
 import rx.Observable;
 import rx.functions.Action1;
 import rx.functions.Func1;
-import vip.xioix.crab.fragment.AbsFg;
-import vip.xioix.crab.fragment.ConversationFg;
 
 import static android.R.attr.id;
 
 public class MainActivity extends AbsActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    SparseArray<AbsFg> fgList = new SparseArray<>();
+    SparseArray<Fragment> fgList = new SparseArray<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +53,10 @@ public class MainActivity extends AbsActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
     }
+
+
 
     @Override
     public void onBackPressed() {
@@ -99,24 +103,24 @@ public class MainActivity extends AbsActivity
                     }
                 })
                 //取出缓存中的Fragment
-                .map(new Func1<MenuItem, AbsFg>() {
+                .map(new Func1<MenuItem, Fragment>() {
                     @Override
-                    public AbsFg call(MenuItem menuItem) {
+                    public Fragment call(MenuItem menuItem) {
                         int id = item.getItemId();
                         return fgList.get(id);
                     }
                 })
                 //过滤掉当前fg与要显示的fg是同一个的情况
-                .filter(new Func1<AbsFg, Boolean>() {
+                .filter(new Func1<Fragment, Boolean>() {
                     @Override
-                    public Boolean call(AbsFg absFg) {
-                        return absFg == null || getFragmentManager().findFragmentByTag(absFg.getClass().getSimpleName()) != absFg;
+                    public Boolean call(Fragment absFg) {
+                        return absFg == null || getSupportFragmentManager().findFragmentByTag(absFg.getClass().getSimpleName()) != absFg;
                     }
                 })
                 //创建新的fg
-                .map(new Func1<AbsFg, AbsFg>() {
+                .map(new Func1<Fragment, Fragment>() {
                     @Override
-                    public AbsFg call(AbsFg absFg) {
+                    public Fragment call(Fragment absFg) {
                         if (absFg == null) {
                             absFg = createSelectFragment(item.getItemId());
                         }
@@ -124,16 +128,16 @@ public class MainActivity extends AbsActivity
                     }
                 })
                 //过滤掉null
-                .filter(new Func1<AbsFg, Boolean>() {
+                .filter(new Func1<Fragment, Boolean>() {
                     @Override
-                    public Boolean call(AbsFg absFg) {
+                    public Boolean call(Fragment absFg) {
                         return absFg != null;
                     }
                 })
                 //展示fg
-                .subscribe(new Action1<AbsFg>() {
+                .subscribe(new Action1<Fragment>() {
                     @Override
-                    public void call(AbsFg absFg) {
+                    public void call(Fragment absFg) {
                         fgList.append(id, absFg);
                         showSelectFragment(absFg);
                     }
@@ -143,14 +147,14 @@ public class MainActivity extends AbsActivity
         return true;
     }
 
-    private void showSelectFragment(AbsFg fg) {
+    private void showSelectFragment(Fragment fg) {
         Log.d(TAG, "showSelectFragment: ");
         // Create fragment and give it an argument specifying the article it should show
         Bundle args = new Bundle();
         //        args.putInt(ArticleFragment.ARG_POSITION, position);
         fg.setArguments(args);
 
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         // Replace whatever is in the fragment_container view with this fragment,
         // and add the transaction to the back stack so the user can navigate back
         transaction.replace(R.id.content_main, fg, fg.getClass().getSimpleName());
@@ -160,13 +164,13 @@ public class MainActivity extends AbsActivity
         transaction.commit();
     }
 
-    private AbsFg createSelectFragment(int id) {
-        AbsFg fg = null;
+    private Fragment createSelectFragment(int id) {
+        Fragment fg = null;
 
         if (id == R.id.nav_conversation) {
-            fg = new ConversationFg();
+            fg = new LCIMConversationListFragment();
         } else if (id == R.id.nav_friends) {
-
+            fg = new LCIMContactFragment();
         } else if (id == R.id.nav_timeline) {
 
         } else if (id == R.id.nav_setting) {
