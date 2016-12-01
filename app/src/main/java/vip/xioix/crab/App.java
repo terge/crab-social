@@ -1,7 +1,7 @@
 package vip.xioix.crab;
 
 import android.app.Application;
-import android.content.Context;
+import android.content.Intent;
 
 import com.avos.avoscloud.AVAnalytics;
 import com.avos.avoscloud.AVOSCloud;
@@ -11,8 +11,8 @@ import org.json.JSONObject;
 
 import java.util.Iterator;
 
-import cn.leancloud.chatkit.UserProvider;
 import cn.leancloud.chatkit.LCChatKit;
+import cn.leancloud.chatkit.UserProvider;
 import vip.xioix.crabbase.base.RemoteConfig;
 
 /**
@@ -22,7 +22,7 @@ import vip.xioix.crabbase.base.RemoteConfig;
 public class App extends Application{
 
     public static final boolean DEBUG  = true;
-    public static Context appContext;
+    public static App appContext;
     private static final String AVOS_APP_ID = "tgIKa9aNaLs975LMgMIOvt2A-gzGzoHsz";
     private static final String AVOS_APP_KEY = "dsYRn3WhJdxFaDiV0HbHYHn3";
 
@@ -55,6 +55,12 @@ public class App extends Application{
                 }
             }
         });
+    }
+
+    public void logout(){
+        Intent intent = new Intent(this,LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 
 

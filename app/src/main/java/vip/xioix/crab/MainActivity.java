@@ -16,14 +16,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.avos.avoscloud.feedback.FeedbackAgent;
+
 import cn.leancloud.chatkit.activity.LCIMContactFragment;
 import cn.leancloud.chatkit.activity.LCIMConversationListFragment;
-import rx.Observable;
-import rx.functions.Action1;
-import rx.functions.Func1;
 import vip.xioix.crabbase.base.AbsActivity;
-
-import static android.R.attr.id;
 
 public class MainActivity extends AbsActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -95,73 +92,54 @@ public class MainActivity extends AbsActivity
     public boolean onNavigationItemSelected(final MenuItem item) {
         Log.d(TAG, "onNavigationItemSelected: ");
 
-        Observable.just(item)
-                //当前item已经是选中状态，不做处理
-                .filter(new Func1<MenuItem, Boolean>() {
-                    @Override
-                    public Boolean call(MenuItem menuItem) {
-                        return !item.isChecked();
-                    }
-                })
-                //取出缓存中的Fragment
-                .map(new Func1<MenuItem, Fragment>() {
-                    @Override
-                    public Fragment call(MenuItem menuItem) {
-                        int id = item.getItemId();
-                        return fgList.get(id);
-                    }
-                })
-                //过滤掉当前fg与要显示的fg是同一个的情况
-                .filter(new Func1<Fragment, Boolean>() {
-                    @Override
-                    public Boolean call(Fragment absFg) {
-                        return absFg == null || getSupportFragmentManager().findFragmentByTag(absFg.getClass().getSimpleName()) != absFg;
-                    }
-                })
-                //创建新的fg
-                .map(new Func1<Fragment, Fragment>() {
-                    @Override
-                    public Fragment call(Fragment absFg) {
-                        if (absFg == null) {
-                            absFg = createSelectFragment(item.getItemId());
-                        }
-                        return absFg;
-                    }
-                })
-                //过滤掉null
-                .filter(new Func1<Fragment, Boolean>() {
-                    @Override
-                    public Boolean call(Fragment absFg) {
-                        return absFg != null;
-                    }
-                })
-                //展示fg
-                .subscribe(new Action1<Fragment>() {
-                    @Override
-                    public void call(Fragment absFg) {
-                        fgList.append(id, absFg);
-                        showSelectFragment(absFg);
-                    }
-                });
+        if (!item.isChecked()) {
+
+            switch (item.getItemId()) {
+                case R.id.nav_conversation:
+                case R.id.nav_contacts:
+                    showSelectFragment(getClickFragment(item.getItemId()));
+                    break;
+                case R.id.nav_timeline:
+                    break;
+                case R.id.nav_setting:
+                    break;
+                case R.id.nav_feedback:
+                    FeedbackAgent agent = new FeedbackAgent(mActivity);
+                    agent.startDefaultThreadActivity();
+                    break;
+                case R.id.nav_logout:
+                    App.appContext.logout();
+                    break;
+            }
+        }
+
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
+
+    private Fragment getClickFragment(int itemId){
+        Fragment fg = fgList.get(itemId);
+        if(fg == null){
+            fg = createSelectFragment(itemId);
+        }
+        return fg;
+    }
+
     private void showSelectFragment(Fragment fg) {
         Log.d(TAG, "showSelectFragment: ");
-        // Create fragment and give it an argument specifying the article it should show
-        Bundle args = new Bundle();
-        //        args.putInt(ArticleFragment.ARG_POSITION, position);
-        fg.setArguments(args);
+        if(fg == null)return;
+
+        boolean isFragmentShowing = getSupportFragmentManager().findFragmentByTag(fg.getClass().getSimpleName()) == fg;
+        if(isFragmentShowing) return;
+
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        // Replace whatever is in the fragment_container view with this fragment,
-        // and add the transaction to the back stack so the user can navigate back
         transaction.replace(R.id.content_main, fg, fg.getClass().getSimpleName());
         transaction.addToBackStack(null);
 
-        // Commit the transaction
         transaction.commit();
     }
 
@@ -170,16 +148,8 @@ public class MainActivity extends AbsActivity
 
         if (id == R.id.nav_conversation) {
             fg = new LCIMConversationListFragment();
-        } else if (id == R.id.nav_friends) {
+        } else if (id == R.id.nav_contacts) {
             fg = new LCIMContactFragment();
-        } else if (id == R.id.nav_timeline) {
-
-        } else if (id == R.id.nav_setting) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
         }
         Log.d(TAG, "createSelectFragment: id:" + id + " fg:" + (fg == null ? null : fg.getClass().getSimpleName()));
         return fg;
