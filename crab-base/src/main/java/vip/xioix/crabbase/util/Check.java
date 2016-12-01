@@ -1,4 +1,4 @@
-package vip.xioix.crab;
+package vip.xioix.crabbase.util;
 
 
 public class Check {

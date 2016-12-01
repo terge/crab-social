@@ -35,6 +35,10 @@ import com.google.common.eventbus.Subscribe;
 import java.util.ArrayList;
 import java.util.List;
 
+import vip.xioix.crabbase.base.AbsActivity;
+import vip.xioix.crabbase.util.InputMethodUtil;
+import vip.xioix.crabbase.util.Validator;
+
 import static android.Manifest.permission.READ_CONTACTS;
 
 /**

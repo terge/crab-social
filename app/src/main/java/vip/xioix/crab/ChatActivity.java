@@ -25,6 +25,9 @@ import com.google.common.eventbus.Subscribe;
 import java.util.ArrayList;
 import java.util.List;
 
+import vip.xioix.crabbase.base.AbsActivity;
+import vip.xioix.crabbase.util.Check;
+
 public class ChatActivity extends AbsActivity {
     public static final String CONVERSATION_ID = "CONVERSATION_ID";
     AVIMConversation mConversation;

@@ -1,4 +1,4 @@
-package vip.xioix.crab;
+package vip.xioix.crabbase.base;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -16,8 +16,8 @@ public class RemoteConfig {
 
     private SharedPreferences sp;
     private SharedPreferences.Editor editor;
-    public RemoteConfig(){
-        sp = App.appContext.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
+    public RemoteConfig(Context context){
+        sp = context.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
         editor = sp.edit();
     }
 

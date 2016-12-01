@@ -1,4 +1,4 @@
-package vip.xioix.crab;
+package vip.xioix.crabbase.base;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -9,6 +9,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.google.common.eventbus.EventBus;
+
+import vip.xioix.crabbase.util.UIHandler;
 
 /**
  * Created by terge on 16-11-25.

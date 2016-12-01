@@ -10,6 +10,8 @@ import android.view.animation.AnimationUtils;
 
 import com.avos.avoscloud.AVUser;
 
+import vip.xioix.crabbase.base.AbsActivity;
+
 public class SplashActivity extends AbsActivity implements Animation.AnimationListener {
 
     @Override

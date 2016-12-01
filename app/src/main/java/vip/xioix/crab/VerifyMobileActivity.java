@@ -12,6 +12,9 @@ import com.avos.avoscloud.AVOSCloud;
 import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.RequestMobileCodeCallback;
 
+import vip.xioix.crabbase.base.AbsActivity;
+import vip.xioix.crabbase.util.UIHandler;
+
 
 public class VerifyMobileActivity extends AbsActivity {
 

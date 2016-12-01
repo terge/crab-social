@@ -1,11 +1,11 @@
-package vip.xioix.crab.fragment;
+package vip.xioix.crabbase.base;
 
 import android.app.Fragment;
 import android.content.Context;
 
 import com.google.common.eventbus.EventBus;
 
-import vip.xioix.crab.AbsActivity;
+import vip.xioix.crabbase.base.AbsActivity;
 
 /**
  * Created by terge on 16-11-23.

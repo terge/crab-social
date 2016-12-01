@@ -13,6 +13,7 @@ import java.util.Iterator;
 
 import cn.leancloud.chatkit.UserProvider;
 import cn.leancloud.chatkit.LCChatKit;
+import vip.xioix.crabbase.base.RemoteConfig;
 
 /**
  * Created by terge on 16-11-23.
@@ -29,7 +30,7 @@ public class App extends Application{
     public void onCreate() {
         super.onCreate();
         appContext = this;
-        RemoteConfig remoteConfig = new RemoteConfig();
+        RemoteConfig remoteConfig = new RemoteConfig(this);
         String appId = remoteConfig.get(RemoteConfig.Key.AVOS_APP_ID,AVOS_APP_ID);
         String appKey = remoteConfig.get(RemoteConfig.Key.AVOS_APP_KEY,AVOS_APP_KEY);
 
@@ -41,14 +42,13 @@ public class App extends Application{
     }
 
     private void refreshRemoteConfig() {
-
         AVAnalytics.setOnlineConfigureListener(new AVOnlineConfigureListener() {
             @Override
             public void onDataReceived(JSONObject jsonObject) {
                 if(jsonObject == null) return;
                 Iterator<String> iterator = jsonObject.keys();
                 String key ;
-                RemoteConfig remoteConfig = new RemoteConfig();
+                RemoteConfig remoteConfig = new RemoteConfig(App.appContext);
                 while(iterator.hasNext()){
                     key = iterator.next();
                     remoteConfig.set(key,jsonObject.optString(key));

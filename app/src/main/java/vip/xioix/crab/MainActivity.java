@@ -21,6 +21,7 @@ import cn.leancloud.chatkit.activity.LCIMConversationListFragment;
 import rx.Observable;
 import rx.functions.Action1;
 import rx.functions.Func1;
+import vip.xioix.crabbase.base.AbsActivity;
 
 import static android.R.attr.id;
 
