@@ -8,6 +8,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.avos.avoscloud.AVUser;
 import com.google.common.eventbus.EventBus;
 
 import vip.xioix.crabbase.util.UIHandler;
@@ -20,6 +21,7 @@ public class AbsActivity extends AppCompatActivity {
     protected final String TAG = getClass().getSimpleName();
     protected EventBus mEventBus;
     protected Activity mActivity;
+    protected AVUser curUser = AVUser.getCurrentUser();
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

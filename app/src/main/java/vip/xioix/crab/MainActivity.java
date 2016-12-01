@@ -12,9 +12,14 @@ import android.util.Log;
 import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.avos.avoscloud.feedback.FeedbackAgent;
+import com.squareup.picasso.Picasso;
 
+import cn.leancloud.chatkit.LCCustomKey;
 import cn.leancloud.chatkit.activity.LCIMContactFragment;
 import cn.leancloud.chatkit.activity.LCIMConversationListFragment;
 import vip.xioix.crabbase.base.AbsActivity;
@@ -49,8 +54,28 @@ public class MainActivity extends AbsActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        initHeadervew(navigationView.getHeaderView(0));
     }
 
+    private void initHeadervew(View headerView) {
+
+        Object url = curUser.get(LCCustomKey.AVATAR_URL);
+        if(url != null){
+            ImageView ivAvatar = (ImageView) headerView.findViewById(R.id.iv_header_avatar);
+            Picasso.with(this)
+                    .load((String) curUser.get(LCCustomKey.AVATAR_URL))
+                    .resize(60,60)
+                    .centerCrop()
+                    .into(ivAvatar);
+        }
+
+        TextView tvName = (TextView) headerView.findViewById(R.id.tv_header_name);
+        tvName.setText(curUser.getUsername());
+
+
+        TextView tvMobile = (TextView) headerView.findViewById(R.id.tv_header_mobile);
+        tvMobile.setText(curUser.getMobilePhoneNumber());
+    }
 
 
     @Override
