@@ -1,5 +1,7 @@
 package cn.leancloud.chatkit.view;
 
+import android.Manifest;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -8,6 +10,8 @@ import android.graphics.Color;
 import android.media.MediaRecorder;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -90,11 +94,13 @@ public class LCIMRecordButton extends Button {
 
   @Override
   public boolean onTouchEvent(MotionEvent event) {
-    if (outputPath == null)
-      return false;
+    if (outputPath == null)return false;
     int action = event.getAction();
     switch (action) {
       case MotionEvent.ACTION_DOWN:
+        if(!checkRecordPermision()){
+          return false;
+        }
         startRecord();
         break;
       case MotionEvent.ACTION_UP:
@@ -119,6 +125,31 @@ public class LCIMRecordButton extends Button {
         break;
     }
     return true;
+  }
+
+  private boolean checkRecordPermision() {
+    int permissionCheck = ContextCompat.checkSelfPermission(getContext(),
+            Manifest.permission.RECORD_AUDIO);
+
+    boolean result =  permissionCheck == android.content.pm.PackageManager.PERMISSION_GRANTED;
+    if(!result){
+      requestPermission();
+    }
+    return result;
+  }
+
+  private void requestPermission() {
+    Activity activity = (Activity) getContext();
+    if (ActivityCompat.shouldShowRequestPermissionRationale(activity,
+            Manifest.permission.READ_CONTACTS)) {
+      Toast.makeText(activity, "Need Record Permission", Toast.LENGTH_SHORT).show();
+    } else {
+      int requestCode = 10086;
+      ActivityCompat.requestPermissions(activity,
+              new String[]{Manifest.permission.RECORD_AUDIO},
+              requestCode
+              );
+    }
   }
 
   public int getColor(int id) {
