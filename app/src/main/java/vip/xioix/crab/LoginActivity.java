@@ -340,8 +340,10 @@ public class LoginActivity extends AbsActivity implements LoaderCallbacks<Cursor
 
     private void register(final String mMobile, String mPassword) {
         AVUser user = new AVUser();
+        user.setUsername(mMobile);
         user.setMobilePhoneNumber(mMobile);
         user.setPassword(mPassword);
+        user.put("channel","582c3513c4c9710054368976");
         user.signUpInBackground(new SignUpCallback() {
             @Override
             public void done(AVException e) {
