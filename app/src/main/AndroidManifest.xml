@@ -67,8 +67,10 @@
         <activity
             android:name=".RequirePermissionActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_permission"
-            android:theme="@style/FullscreenTheme"></activity>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity android:name=".RegisterActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+
+        </activity>
     </application>
 
 </manifest>

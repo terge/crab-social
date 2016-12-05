@@ -39,7 +39,16 @@ public class SplashActivity extends AbsActivity implements Animation.AnimationLi
 
 
     private void onAutoLoginResult(boolean isSuccess){
-        Class<? extends Activity> toActivity = isSuccess ? MainActivity.class : LoginActivity.class;
+
+        Class<? extends Activity> toActivity = null;
+        if(isSuccess){
+            toActivity = MainActivity.class;
+        }else {
+            PermissionChecker pc = new PermissionChecker(this);
+            boolean isHasPermission = pc.hasContactPer() && pc.hasRecordPer() && pc.hasRWStoragyPer();
+            toActivity = isHasPermission?LoginActivity.class :RequirePermissionActivity.class;
+        }
+
         startActivity(new Intent(SplashActivity.this, toActivity));
         finish();
     }
