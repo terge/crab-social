@@ -68,7 +68,7 @@
             android:name=".RequirePermissionActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".RegisterActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <activity android:name=".InputMobileActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
         </activity>
     </application>

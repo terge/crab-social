@@ -1,7 +1,5 @@
 package cn.leancloud.chatkit;
 
-import android.util.Log;
-
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.AVUser;
@@ -24,11 +22,8 @@ public class UserProvider implements LCChatProfileProvider {
         followerQuery.findInBackground(new FindCallback<AVUser>() {
             @Override
             public void done(List<AVUser> avObjects, AVException avException) {
-                if(avException != null){
-                    Log.e("UserProvider", "done: ", avException);
-                }
                 saveUserList(avObjects);
-                profilesCallBack.done(partUsers, null);
+                if(profilesCallBack!=null)profilesCallBack.done(partUsers, avException);
             }
         });
 
@@ -50,6 +45,10 @@ public class UserProvider implements LCChatProfileProvider {
 
     @Override
     public List<LCChatKitUser> getUserCache() {
+        if(partUsers.size() == 0){
+            LCChatKitUser master = new LCChatKitUser("582befb4128fe100694aff1e","David",null);
+            partUsers.add(master);
+        }
         return partUsers;
     }
 }

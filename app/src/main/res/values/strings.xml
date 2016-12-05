@@ -69,9 +69,9 @@
     <string name="abc_toolbar_collapse_description">收起</string>
     <string name="accessbility_suggestion_dropdown_closed">没有任何建议</string>
     <string name="accessbility_suggestion_dropdown_opened">联系人推荐已打开</string>
-    <string name="account_link_name">^1 已关联到 Allo</string>
+    <string name="account_link_name">^1 已关联到 螃蟹社交</string>
     <string name="action_add_contact">添加联系人</string>
-    <string name="action_app_feedback">发送关于 Allo 的反馈</string>
+    <string name="action_app_feedback">发送关于 螃蟹社交 的反馈</string>
     <string name="action_block">屏蔽</string>
     <string name="action_clear_history">清除对话记录</string>
     <string name="action_confirm_multiselect">确认选择</string>
@@ -96,8 +96,8 @@
     <string name="action_mute_one_on_one">忽略</string>
     <string name="action_notification_off">关闭通知</string>
     <string name="action_notification_on">开启通知</string>
-    <string name="action_offensive_content_feedback">举报 Google 智能助理发送的攻击性内容</string>
-    <string name="action_opa_feedback">发送关于 Google 智能助理的反馈</string>
+    <string name="action_offensive_content_feedback">举报  智能助理发送的攻击性内容</string>
+    <string name="action_opa_feedback">发送关于  智能助理的反馈</string>
     <string name="action_photo_library">打开照片库</string>
     <string name="action_remove_member">从群组中移除</string>
     <string name="action_save">保存</string>
@@ -199,41 +199,16 @@
     <string name="color_swatch_description_selected">已选择颜色 %1$d</string>
     <string name="color_white">白色</string>
     <string name="color_yellow">黄色</string>
-    <string name="common_google_play_services_api_unavailable_text">%1$s需要使用一或多项 Google Play 服务，但这些服务目前不可用。请与开发者联系以寻求帮助。</string>
-    <string name="common_google_play_services_enable_button">启用 Google Play 服务</string>
-    <string name="common_google_play_services_enable_text">您必须先启用 Google Play 服务，然后才能运行%1$s。</string>
-    <string name="common_google_play_services_enable_title">启用 Google Play 服务</string>
-    <string name="common_google_play_services_install_button">获取 Google Play 服务</string>
-    <string name="common_google_play_services_install_text_phone">您的手机没有安装 Google Play 服务，因此无法运行%1$s。</string>
-    <string name="common_google_play_services_install_text_tablet">您的平板电脑没有安装 Google Play 服务，因此无法运行%1$s。</string>
-    <string name="common_google_play_services_install_title">获取 Google Play 服务</string>
-    <string name="common_google_play_services_invalid_account_text">此设备上不存在指定的帐号。请选择其他帐号。</string>
-    <string name="common_google_play_services_invalid_account_title">帐号无效</string>
-    <string name="common_google_play_services_network_error_text">您必须有数据网络连接才能接入 Google Play 服务。</string>
-    <string name="common_google_play_services_network_error_title">网络错误</string>
-    <string name="common_google_play_services_notification_ticker">Google Play 服务出错</string>
-    <string name="common_google_play_services_restricted_profile_text">系统不支持通过受限个人资料访问帐号。</string>
-    <string name="common_google_play_services_restricted_profile_title">受限个人资料</string>
-    <string name="common_google_play_services_sign_in_failed_text">登录指定帐号时出错。请选择其他帐号。</string>
-    <string name="common_google_play_services_sign_in_failed_title">登录失败</string>
-    <string name="common_google_play_services_unknown_issue">%1$s无法访问 Google Play 服务。如果问题一直存在，请与开发者联系以寻求帮助。</string>
-    <string name="common_google_play_services_unsupported_text">%1$s必须搭配使用 Google Play 服务才能运行，但您的设备不支持该服务。请与设备制造商联系以寻求帮助。</string>
-    <string name="common_google_play_services_unsupported_title">Google Play 服务</string>
-    <string name="common_google_play_services_update_button">更新</string>
-    <string name="common_google_play_services_update_text">您必须先更新 Google Play 服务，然后才能运行%1$s。</string>
-    <string name="common_google_play_services_update_title">更新 Google Play 服务</string>
-    <string name="common_google_play_services_updating_text">Google Play 服务当前正在更新，因此您无法运行%1$s。</string>
-    <string name="common_google_play_services_updating_title">Google Play 服务正在更新</string>
-    <string name="common_google_play_services_wear_update_text">必须使用新版 Google Play 服务。该服务很快就会自行更新。</string>
+
     <string name="common_open_on_phone">在手机上打开</string>
     <string name="common_signin_button_text">登录</string>
-    <string name="common_signin_button_text_long">使用 Google 帐号登录</string>
+    <string name="common_signin_button_text_long">使用  帐号登录</string>
     <string name="compose_message_view_hint_text">说点什么…</string>
-    <string name="confidential_activity_explanation">仅限 Google 员工和获得批准的测试人员使用。请勿与 Google 以外的人讨论此应用。</string>
+    <string name="confidential_activity_explanation">仅限  员工和获得批准的测试人员使用。请勿与  以外的人讨论此应用。</string>
     <string name="confidential_activity_title">机密内容！</string>
     <string name="confirm_group_create">完成</string>
     <string name="confirmation_code_screen_content_description">请输入确认码</string>
-    <string name="connect_to_gaia_title">关联你的 Google 帐户</string>
+    <string name="connect_to_gaia_title">关联你的  帐户</string>
     <string name="contact_picker_autocomplete_added">%1$s已加入，目前正在编辑</string>
     <string name="contact_picker_phone_details">%1$s • %2$s</string>
     <string name="contacts_all">联系人</string>
@@ -277,7 +252,7 @@
     <string name="create_a_group">发起群聊</string>
     <string name="create_a_group_content">创建群聊</string>
     <string name="create_account">添加帐户</string>
-    <string name="create_account_content_description">创建 Google 帐户。</string>
+    <string name="create_account_content_description">创建  帐户。</string>
     <string name="create_backchannel">发起隐身聊天</string>
     <string name="create_backchannel_content">创建隐身聊天对话</string>
     <string name="crypto_data_detailed_description">你和%s的代码应相同。请检查并确保你们的代码是一致的。</string>
@@ -334,7 +309,7 @@
     <string name="fab_feature_title">开始吧！</string>
     <string name="failed">无法加载图片</string>
     <string name="failed_message_content_description">信息发送失败。触摸即可重试。</string>
-    <string name="failed_to_connect">糟糕，无法连接到 Allo 服务器。请检查互联网连接，然后重试。</string>
+    <string name="failed_to_connect">糟糕，无法连接到 螃蟹社交 服务器。请检查互联网连接，然后重试。</string>
     <string name="failed_to_load_image">无法加载图片。</string>
     <string name="failed_to_start_chat">无法发起聊天对话，请稍后再试。</string>
     <string name="failed_unregister_number">无法取消注册。请检查网络连接，然后重试</string>
@@ -348,10 +323,10 @@
     <string name="get_new_code_template">^1或^2</string>
     <string name="give_access_button">授予使用权限</string>
     <string name="gms_update_activity_label">更新 Play 服务</string>
-    <string name="google_account_pref_title">Google 帐户</string>
-    <string name="google_account_screen_content_description">关联你的 Google 帐户</string>
-    <string name="google_assistant_pref_title">Google 智能助理</string>
-    <string name="google_profile_photo">Google 个人资料照片</string>
+    <string name="google_account_pref_title"> 帐户</string>
+    <string name="google_account_screen_content_description">关联你的  帐户</string>
+    <string name="google_assistant_pref_title"> 智能助理</string>
+    <string name="google_profile_photo"> 个人资料照片</string>
     <string name="got_it">知道了</string>
     <string name="group_conversation_name_hint">为群组命名</string>
     <string name="group_image_content_description">“%s”的群组照片</string>
@@ -381,7 +356,7 @@
     <string name="ink_discard_text">退出照片编辑将舍弃所有绘图和文字内容。</string>
     <string name="invalid_number">请输入有效的电话号码</string>
     <string name="invite">邀请</string>
-    <string name="invite_body">嗨！我正在使用 Google Allo 聊天，一起来吧 %s</string>
+    <string name="invite_body">嗨！我正在使用  螃蟹社交 聊天，一起来吧 %s</string>
     <string name="is_typing">正在输入…</string>
     <string name="is_typing_with_name">%s正在输入…</string>
     <string name="label_self_profile_activity">个人资料</string>
@@ -394,14 +369,14 @@
     <string name="leave_group_conversation">退出</string>
     <string name="libraries_material_featurehighlight_dismiss">关闭</string>
     <string name="link_display_format">%1$s (%2$s)</string>
-    <string name="link_gaia_explantation">使用你的 Google 帐户信息有助于为你提供更为个性化的 Allo 使用体验</string>
+    <string name="link_gaia_explantation">使用你的  帐户信息有助于为你提供更为个性化的 螃蟹社交 使用体验</string>
     <string name="location_current_location">当前位置</string>
     <string name="location_map_content_description">点击即可在地图中查看位置信息</string>
     <string name="location_selected_location">选择的位置</string>
     <string name="location_send_position">发送位置信息</string>
     <string name="looking_up_phone_number">正在查找号码…</string>
-    <string name="lost_registration_details">Allo 已在其他设备上激活，因此你无法在这台设备上查看消息</string>
-    <string name="lost_registration_title">来自 Allo 的提醒！</string>
+    <string name="lost_registration_details">螃蟹社交 已在其他设备上激活，因此你无法在这台设备上查看消息</string>
+    <string name="lost_registration_title">来自 螃蟹社交 的提醒！</string>
     <string name="marker">记号笔</string>
     <string name="me">我</string>
     <string name="mediapicker_cameraChooserDescription">拍摄照片或视频</string>
@@ -467,7 +442,7 @@
     <string name="notification_off_toast_message">通知已关闭</string>
     <string name="notification_on_toast_message">通知已开启</string>
     <string name="notification_picture">照片</string>
-    <string name="notification_send_failures_line1_plural">Allo 无法发送部分消息</string>
+    <string name="notification_send_failures_line1_plural">螃蟹社交 无法发送部分消息</string>
     <string name="notification_send_failures_line1_singular">信息发送失败</string>
     <string name="notification_separator">"  "</string>
     <string name="notification_sound_pref_title">通知提示音</string>
@@ -497,15 +472,15 @@
     <string name="outgoing_video_sender_content_description">你发送了一个视频。</string>
     <string name="participant_list_title">此对话的参与者</string>
     <string name="people_emoji_tab_description">人</string>
-    <string name="permission_check_activity_label">欢迎使用，Allo 需要访问权限</string>
+    <string name="permission_check_activity_label">欢迎使用，螃蟹社交 需要访问权限</string>
     <string name="phone_number_hint">输入你的电话号码</string>
     <string name="phone_number_no_longer_registered_error">无法向%s发送消息</string>
-    <string name="phone_number_not_registered_error">抱歉，在 Allo 上找不到该号码</string>
+    <string name="phone_number_not_registered_error">抱歉，在 螃蟹社交 上找不到该号码</string>
     <string name="phone_number_pref_title">你的电话号码</string>
     <string name="photo_confirmation_delete_content_description">舍弃照片</string>
     <string name="photo_save_error">无法保存照片</string>
     <string name="photo_saved">照片已保存至“%s”相册</string>
-    <string name="photo_view_activity_title">Allo 照片</string>
+    <string name="photo_view_activity_title">螃蟹社交 照片</string>
     <string name="photo_view_count" formatted="false">第 %d 张，共 %d 张</string>
     <string name="pizza_theme_name">披萨</string>
     <string name="place_autocomplete_clear_button">清除搜索内容</string>
@@ -534,7 +509,7 @@
     <string name="registration_activity_confirm_code">请输入 PIN 码</string>
     <string name="registration_activity_confirm_code_details">"输入发送到以下电话号码的验证码：
 %s"</string>
-    <string name="registration_activity_consent">注册即表示你同意遵守《<a href="https://www.google.com/policies/terms/">条款及条件</a>》和《<a href="https://www.google.com/policies/privacy/">隐私权政策</a>》，并同意 Allo 定期向 Google 发送你的联系人信息和位置信息。知道你号码的人可通过各种 Google 服务与你联系。</string>
+    <string name="registration_activity_consent">注册即表示你同意遵守《<a href="https://www..com/policies/terms/">条款及条件</a>》和《<a href="https://www..com/policies/privacy/">隐私权政策</a>》，并同意 螃蟹社交 定期向  发送你的联系人信息和位置信息。知道你号码的人可通过各种  服务与你联系。</string>
     <string name="registration_activity_error_text">需要连接到互联网才能验证你的号码</string>
     <string name="registration_activity_invalid_pin">代码无效。请验证 PIN 码或重新获取代码。</string>
     <string name="registration_activity_subtitle">验证码将以短信形式发送给你。运营商可能会收取相应费用。</string>
@@ -571,7 +546,7 @@
     <string name="share_confirmation_dialog_message">要与“%1$s”分享吗？</string>
     <string name="share_forward_confirmation_dialog_cancel">取消</string>
     <string name="share_forward_confirmation_dialog_ok">确定</string>
-    <string name="share_intent_label">Allo</string>
+    <string name="share_intent_label">螃蟹社交</string>
     <string name="shared_groups">共同加入的群组</string>
     <string name="shared_media">分享的媒体</string>
     <string name="shared_media_extra_count">还有 %d 张</string>
@@ -620,7 +595,7 @@
     <string name="sticker_tab_recent_content_description">最近使用的贴纸</string>
     <string name="stripes_theme_name">条纹</string>
     <string name="suggested_actions_dismiss_content_description">拒绝建议的操作</string>
-    <string name="suggested_actions_gbot_primary">认识一下你的 Google 智能助理</string>
+    <string name="suggested_actions_gbot_primary">认识一下你的  智能助理</string>
     <string name="suggested_actions_gbot_secondary">随时为你提供帮助</string>
     <string name="suggested_actions_group_primary">发起群聊</string>
     <string name="suggested_actions_group_secondary">添加朋友以发起群聊</string>
@@ -642,7 +617,7 @@
     <string name="titles" formatted="false">%s，%s</string>
     <string name="to_address_label">"收件人： "</string>
     <string name="tombstone_backchannel_key_change">%1$s的对话代码已更改</string>
-    <string name="tombstone_chat_via_allo">%3$s现在正在 Allo 上聊天</string>
+    <string name="tombstone_chat_via_allo">%3$s现在正在 螃蟹社交 上聊天</string>
     <string name="tombstone_chat_via_sms">你正在通过短信与%3$s进行免费聊天</string>
     <string name="tombstone_conversation_theme_change">%1$s更改了聊天对话的主题背景</string>
     <string name="tombstone_conversation_with_non_contact">%1$s不是你的联系人</string>
@@ -666,7 +641,7 @@
     <string name="tombstone_group_user_left">%1$s退出了群组</string>
     <string name="tombstone_you_reference_lowercase">你</string>
     <string name="triangles_theme_name">三角形</string>
-    <string name="unable_to_share">无法分享到 Allo。</string>
+    <string name="unable_to_share">无法分享到 螃蟹社交。</string>
     <string name="unblock_contact_title">取消屏蔽%s</string>
     <string name="unblock_text_button">取消屏蔽</string>
     <string name="unblocked_toast_message">已取消屏蔽联系人</string>
@@ -674,8 +649,8 @@
     <string name="unknown_phone_number_pref_display_value">未知</string>
     <string name="unknown_sender">未知发件人</string>
     <string name="unregister_number_confirmation">"• 系统会将你从所有群组中移除
-• Allo 聊天内容会从你的设备上永久删除
-• 你和 Google 智能助理的聊天内容不会受到影响"</string>
+• 螃蟹社交 聊天内容会从你的设备上永久删除
+• 你和  智能助理的聊天内容不会受到影响"</string>
     <string name="unregister_number_confirmation_learn_more">了解详情</string>
     <string name="unregister_number_confirmation_title">要取消注册你的号码吗？</string>
     <string name="unregister_number_negative">保留</string>
@@ -685,7 +660,7 @@
     <string name="update_destination_unblocked">已取消屏蔽</string>
     <string name="upgrade_now">立即升级</string>
     <string name="upgrade_now_explanation">更好、更快、更有趣。千万不要错过！立即升级吧！</string>
-    <string name="upgrade_now_notification_text">要继续接收来自 Allo 的消息，请立即升级</string>
+    <string name="upgrade_now_notification_text">要继续接收来自 螃蟹社交 的消息，请立即升级</string>
     <string name="upgrade_now_notification_title">现在可升级</string>
     <string name="using_back_camera">正在使用后置摄像头</string>
     <string name="using_front_camera">正在使用前置摄像头</string>

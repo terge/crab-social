@@ -56,14 +56,5 @@
             android:onClick="onNext"
             android:text="@string/next" />
 
-        <Button
-            android:id="@+id/settings"
-            style="@style/Welcome.Footer.Button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:contentDescription="@string/settings"
-            android:text="@string/settings"
-            android:visibility="gone" />
     </FrameLayout>
 </LinearLayout>

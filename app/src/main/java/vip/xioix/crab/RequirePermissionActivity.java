@@ -55,7 +55,7 @@ public class RequirePermissionActivity extends AbsActivity {
                 }
             }
             //全部允许了
-            startActivity(new Intent(this,RegisterActivity.class));
+            startActivity(new Intent(this,InputMobileActivity.class));
 
         }
 
