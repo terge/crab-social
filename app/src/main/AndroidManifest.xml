@@ -65,7 +65,7 @@
             android:label="@string/title_activity_chat"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".PermissionActivity"
+            android:name=".RequirePermissionActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_permission"
             android:theme="@style/FullscreenTheme"></activity>
