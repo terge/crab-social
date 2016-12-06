@@ -90,7 +90,7 @@
             android:alpha="0.6"
             android:drawableEnd="@drawable/quantum_ic_navigate_next_white_24"
             android:drawableRight="@drawable/quantum_ic_navigate_next_white_24"
-            android:enabled="false"
+            android:onClick="onNext"
             android:text="@string/next" />
     </FrameLayout>
 </FrameLayout>

@@ -506,7 +506,7 @@
     <string name="recipient_hint">输入姓名或电话号码</string>
     <string name="recording_end_announcement">已停止录制。</string>
     <string name="recording_start_announcement">正在录制。</string>
-    <string name="registration_activity_confirm_code">请输入 PIN 码</string>
+    <string name="registration_activity_confirm_code">请输入短信验证码</string>
     <string name="registration_activity_confirm_code_details">"输入发送到以下电话号码的验证码：
 %s"</string>
     <string name="registration_activity_consent">注册即表示你同意遵守《<a href="https://www..com/policies/terms/">条款及条件</a>》和《<a href="https://www..com/policies/privacy/">隐私权政策</a>》，并同意 螃蟹社交 定期向  发送你的联系人信息和位置信息。知道你号码的人可通过各种  服务与你联系。</string>
@@ -669,7 +669,7 @@
     <string name="video_saved">视频已保存至“%s”相册</string>
     <string name="video_thumbnail_image">视频缩略图</string>
     <string name="video_thumbnail_view_play_button_content_description">播放视频</string>
-    <string name="wait_for_code">请稍候 ^1</string>
+    <string name="wait_for_code">请稍候 %d</string>
     <string name="wait_when_connecting">正在连接</string>
     <string name="wait_while_creating_conversation_detail">正在创建聊天对话</string>
     <string name="wait_while_creating_group_conversation_detail">正在创建群聊</string>

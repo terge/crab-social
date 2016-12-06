@@ -15,6 +15,7 @@ import java.util.Iterator;
 import cn.leancloud.chatkit.LCChatKit;
 import cn.leancloud.chatkit.UserProvider;
 import vip.xioix.crabbase.base.RemoteConfig;
+import vip.xioix.crabbase.util.UIHandler;
 
 /**
  * Created by terge on 16-11-23.
@@ -40,6 +41,7 @@ public class App extends Application{
 //        AVOSCloud.initialize(this,appId,appKey);
         AVOSCloud.setDebugLogEnabled(true);
         refreshRemoteConfig();
+        UIHandler.initialize();
     }
 
     private void refreshRemoteConfig() {
