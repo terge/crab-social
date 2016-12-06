@@ -1,6 +1,7 @@
 package vip.xioix.crabbase.base;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.Looper;
 import android.support.annotation.Nullable;
@@ -64,5 +65,21 @@ public class AbsActivity extends AppCompatActivity {
         return -1;
     }
 
+    private ProgressDialog mLoading =  null;
+    protected void showProgress(String content){
+        showProgress(null,content);
+    }
+
+    protected void showProgress(String title,String content){
+        if(mLoading != null && mLoading.isShowing()){
+            mLoading.dismiss();
+        }
+        mLoading = ProgressDialog.show(this,title,content);
+    }
+    protected void dissmissProgress(){
+        if(mLoading != null && mLoading.isShowing()){
+            mLoading.dismiss();
+        }
+    }
 
 }
