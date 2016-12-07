@@ -2,23 +2,24 @@ package vip.xioix.crab;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
 import com.avos.avoscloud.AVException;
-import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.AVUser;
-import com.avos.avoscloud.FindCallback;
-
-import org.apache.commons.lang.StringUtils;
-
-import java.util.List;
+import com.avos.avoscloud.LogInCallback;
+import com.avos.avoscloud.SignUpCallback;
+import com.google.common.eventbus.Subscribe;
 
 import vip.xioix.crabbase.base.AbsActivity;
-import vip.xioix.crabbase.util.Validator;
+import vip.xioix.crabbase.util.validate.DigitLengthRangeValidator;
+import vip.xioix.crabbase.util.validate.EmptyValidator;
+import vip.xioix.crabbase.util.validate.PhoneValidator;
+import vip.xioix.crabbase.util.validate.ValidatorHelper;
 
 public class InputMobileActivity extends AbsActivity {
-    private EditText etMobile;
+    private EditText etMobile,etPassword;
 
 
     @Override
@@ -26,11 +27,14 @@ public class InputMobileActivity extends AbsActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_input_mobile);
         etMobile = (EditText) findViewById(R.id.phone_number);
+        etPassword = (EditText) findViewById(R.id.et_login_password);
     }
 
     public void onNext(View view) {
-        String mobile = etMobile.getText().toString();
-        if (checkMobile(mobile)) {
+        if (checkMobile()) {
+            String mobile = etMobile.getText().toString();
+            String password = etPassword.getText().toString();
+            tryLogin(mobile,password);
 //            queryUserInfo(mobile);
             Intent intent = new Intent(this,InputSmsCaptchaActivity.class);
             intent.putExtra(InputSmsCaptchaActivity.KEY_MOBILE,mobile);
@@ -38,52 +42,83 @@ public class InputMobileActivity extends AbsActivity {
         }
     }
 
-    private void queryUserInfo(final String mobile) {
-        AVQuery<AVUser> query = AVUser.getQuery();
-        query.whereEqualTo("mobilePhoneNumber", mobile);
-        showProgress(getString(R.string.wait_when_connecting));
-
-        query.findInBackground(new FindCallback<AVUser>() {
+    private void tryLogin(final String mobile, final String password) {
+        AVUser.loginByMobilePhoneNumberInBackground(mobile, password, new LogInCallback<AVUser>() {
             @Override
-            public void done(List<AVUser> list, AVException e) {
-                dissmissProgress();
-                if (e != null) {
-                    showError(e.getLocalizedMessage());
-                    return;
-                }
-
-                boolean isEmpty = list == null || list.size() == 0;
-                AVUser user = isEmpty ? null : list.get(0);
-                //新用户
-                if (user == null) {
-                    onNewUserLogin(mobile);
-                }
-                //老用户
-                else {
-                    onOldUserLogin(user);
+            public void done(AVUser avUser, AVException e) {
+                if(e == null){
+                    //onLoginSuccess
+                    mEventBus.post(avUser);
+                }else {
+                    if (e.getCode() == AVException.USER_DOESNOT_EXIST) {
+                        register(mobile, password);
+                    }else if(e.getCode() == AVException.USER_MOBILEPHONE_NOT_VERIFIED){
+                        toVerifyMobile(mobile);
+                    }else{
+                        showError(e.getMessage());
+                    }
                 }
             }
         });
     }
 
-    private void onOldUserLogin(AVUser user) {
-        startActivity(new Intent(this,YourNameActivity.class));
+    private void toVerifyMobile(String mobile){
+        Log.d(TAG, "toVerifyMobile: ");
+        Intent intent = new Intent(this, InputSmsCaptchaActivity.class);
+        intent.putExtra(VerifyMobileActivity.KEY_MOBILE, mobile);
+        startActivity(intent);
+        finish();
     }
 
-    private void onNewUserLogin(String mobile) {
-        startActivity(new Intent(this,InputSmsCaptchaActivity.class));
+
+    @Subscribe
+    private void onLoginSuccess(AVUser user){
+        Log.d(TAG, "onLoginSuccess: ");
+        startActivity(new Intent(this,MainActivity.class));
+        finish();
     }
 
-    private boolean checkMobile(String mobile) {
-        boolean result = Validator.isPhone(mobile);
+    @Subscribe
+    private void onRegisterSuccess(String mobile) {
+        Log.d(TAG, "onRegisterSuccess: ");
+        toVerifyMobile(mobile);
+    }
 
-        if (!result) {
-            String hint = StringUtils.isEmpty(mobile) ? getString(R.string.error_field_required) : getString(R.string.error_invalid_mobile);
-            etMobile.requestFocus();
-            etMobile.setError(hint);
-        }
 
-        return result;
+    private void register(final String mMobile, String mPassword) {
+        Log.d(TAG, "register: ");
+        AVUser user = new AVUser();
+        user.setUsername(mMobile);
+        user.setMobilePhoneNumber(mMobile);
+        user.setPassword(mPassword);
+        user.put("channel","582c3513c4c9710054368976");
+        user.signUpInBackground(new SignUpCallback() {
+            @Override
+            public void done(AVException e) {
+                if(e == null){
+                    //onRegisterSuccess
+                    mEventBus.post(mMobile);
+                }
+            }
+        });
+    }
+
+
+
+    private boolean checkMobile() {
+        boolean isMobileInputOK = ValidatorHelper.from(etMobile)
+                .set(new EmptyValidator(getString(R.string.error_field_required)))
+                .and(new PhoneValidator(getString(R.string.error_invalid_mobile)))
+                .check(true);
+        if(!isMobileInputOK)return false;
+
+        return ValidatorHelper.from(etPassword)
+                .set(new EmptyValidator(getString(R.string.error_field_required)))
+                .and(new DigitLengthRangeValidator(getString(R.string.error_password_length),6,20))
+                .check(true);
+
+
+
     }
 
 }

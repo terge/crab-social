@@ -62,7 +62,7 @@ public class App extends Application{
 
     public void logout(){
         AVUser.logOut();
-        Intent intent = new Intent(this,LoginActivity.class);
+        Intent intent = new Intent(this,InputMobileActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }

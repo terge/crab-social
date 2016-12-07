@@ -80,8 +80,6 @@ public class MainActivity extends AbsActivity
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.content_main, fg, fg.getClass().getSimpleName());
-        transaction.addToBackStack(null);
-
         transaction.commit();
     }
 

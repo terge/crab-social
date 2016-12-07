@@ -11,6 +11,7 @@
     <string name="error_invalid_password">密码太短啦</string>
     <string name="error_incorrect_password">密码与账号不匹配</string>
     <string name="error_field_required">必填项</string>
+    <string name="error_password_length">密码必须未6~20位</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
@@ -507,13 +508,15 @@
     <string name="recording_end_announcement">已停止录制。</string>
     <string name="recording_start_announcement">正在录制。</string>
     <string name="registration_activity_confirm_code">请输入短信验证码</string>
+    <string name="error_input_smscode_length">短信验证码位数不对</string>
     <string name="registration_activity_confirm_code_details">"输入发送到以下电话号码的验证码：
 %s"</string>
     <string name="registration_activity_consent">注册即表示你同意遵守《<a href="https://www..com/policies/terms/">条款及条件</a>》和《<a href="https://www..com/policies/privacy/">隐私权政策</a>》，并同意 螃蟹社交 定期向  发送你的联系人信息和位置信息。知道你号码的人可通过各种  服务与你联系。</string>
     <string name="registration_activity_error_text">需要连接到互联网才能验证你的号码</string>
     <string name="registration_activity_invalid_pin">代码无效。请验证 PIN 码或重新获取代码。</string>
-    <string name="registration_activity_subtitle">验证码将以短信形式发送给你。运营商可能会收取相应费用。</string>
-    <string name="registration_activity_title">验证你的号码</string>
+    <string name="registration_activity_subtitle">输入您的手机号,如果为新用户,稍候会向该手机号发送一条短信验证码</string>
+    <string name="registration_activity_pasword_hint">老用户输入您的密码\r\n新用户则输入您要设置的密码</string>
+    <string name="registration_activity_title">登录/注册</string>
     <string name="remove_account">取消关联</string>
     <string name="reply">回复</string>
     <string name="retry">重试</string>
@@ -759,4 +762,5 @@
     <string name="pref_ringtone_silent">Silent</string>
 
     <string name="pref_title_vibrate">Vibrate</string>
+    <string name="login_password_hint">输入密码</string>
 </resources>

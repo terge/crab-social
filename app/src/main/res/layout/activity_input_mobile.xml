@@ -31,10 +31,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingEnd="32.0dip"
-                android:paddingLeft="32.0dip"
-                android:paddingRight="32.0dip"
-                android:paddingStart="32.0dip">
+                android:padding="32.0dip">
 
                 <TextView
                     style="@style/Welcome.Title"
@@ -50,26 +47,31 @@
                     android:text="@string/registration_activity_subtitle" />
 
                 <android.support.v7.widget.AppCompatEditText
-                    android:id="@+id/country"
-                    style="@style/Welcome.EditText"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8.0dip"
-                    android:focusable="false"
-                    android:editable="false"
-                    android:text="中国(+86)"
-                    android:hint="@string/country_hint"
-                    android:textDirection="locale" />
-
-                <android.support.v7.widget.AppCompatEditText
                     android:id="@+id/phone_number"
                     style="@style/Welcome.EditText"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8.0dip"
+                    android:layout_marginTop="5dip"
                     android:hint="@string/phone_number_hint"
                     android:inputType="phone"
                     android:textDirection="ltr" />
+
+                <TextView
+                    style="@style/Welcome.Subtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dip"
+                    android:text="@string/registration_activity_pasword_hint" />
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/et_login_password"
+                    style="@style/Welcome.EditText"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dip"
+                    android:hint="@string/login_password_hint"
+                    android:textDirection="locale" />
+
+
 
                 <TextView
                     android:id="@+id/consent_text"

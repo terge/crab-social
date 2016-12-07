@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVMobilePhoneVerifyCallback;
-import com.avos.avoscloud.AVOSCloud;
 import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.RequestMobileCodeCallback;
 
@@ -77,7 +76,8 @@ public class VerifyMobileActivity extends AbsActivity {
             },2000);
             return;
         }
-        AVOSCloud.requestSMSCodeInBackground(mobile, "螃蟹社交", "手机号验证", 10, new RequestMobileCodeCallback() {
+
+        AVUser.requestMobilePhoneVerifyInBackground(mMobile, new RequestMobileCodeCallback() {
             @Override
             public void done(AVException e) {
                 if (e != null) {

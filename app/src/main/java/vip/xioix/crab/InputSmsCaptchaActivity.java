@@ -9,14 +9,16 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVMobilePhoneVerifyCallback;
 import com.avos.avoscloud.AVUser;
-import com.avos.avoscloud.LogInCallback;
-
-import org.apache.commons.lang.StringUtils;
+import com.avos.avoscloud.RequestMobileCodeCallback;
 
 import vip.xioix.crabbase.base.AbsActivity;
 import vip.xioix.crabbase.util.Check;
 import vip.xioix.crabbase.util.UIHandler;
+import vip.xioix.crabbase.util.validate.DigitLengthRangeValidator;
+import vip.xioix.crabbase.util.validate.EmptyValidator;
+import vip.xioix.crabbase.util.validate.ValidatorHelper;
 
 public class InputSmsCaptchaActivity extends AbsActivity {
     public static final String KEY_MOBILE = "mobile";
@@ -34,7 +36,6 @@ public class InputSmsCaptchaActivity extends AbsActivity {
         ((TextView)findViewById(R.id.confirm_code_details)).setText(confirStr);
         etCode = (EditText) findViewById(R.id.pincode_edittext);
         tvCountDown = (TextView) findViewById(R.id.get_new_code_or_wait);
-        requestSmsCode();
     }
 
 
@@ -66,7 +67,15 @@ public class InputSmsCaptchaActivity extends AbsActivity {
     private void requestSmsCode(){
         Log.d(TAG, "requestSmsCode: ");
         countDownSecond = 60;
-        AVUser.requestLoginSmsCodeInBackground(mMobile,null);
+        AVUser.requestMobilePhoneVerifyInBackground(mMobile, new RequestMobileCodeCallback() {
+            @Override
+            public void done(AVException e) {
+                if (e != null) {
+                    showError(e.getMessage());
+                }
+            }
+        });
+
         UIHandler.post(countDown);
     }
 
@@ -78,27 +87,28 @@ public class InputSmsCaptchaActivity extends AbsActivity {
 
     public void onNext(View view) {
         String smsCode = etCode.getText().toString();
-        if(checkInput(smsCode)){
-            signUpOrLogin(mMobile,smsCode);
+        if(checkInput()){
+            verifyPhone(mMobile,smsCode);
         }
     }
 
-    private void signUpOrLogin(String mMobile, String smsCode) {
-        AVUser.signUpOrLoginByMobilePhoneInBackground(mMobile, smsCode, new LogInCallback<AVUser>() {
+    private void verifyPhone(String mMobile, String smsCode) {
+        AVUser.verifyMobilePhoneInBackground(smsCode, new AVMobilePhoneVerifyCallback() {
             @Override
-            public void done(AVUser avUser, AVException e) {
+            public void done(AVException e) {
                 if(e != null){
                     onLoginFail(e);
                     return;
                 }
 
-                onLoginSuccess(avUser);
+                onVerifySuccess();
             }
         });
 
+
     }
 
-    private void onLoginSuccess(AVUser avUser){
+    private void onVerifySuccess(){
         startActivity(new Intent(this,YourNameActivity.class));
         finish();
     }
@@ -109,24 +119,11 @@ public class InputSmsCaptchaActivity extends AbsActivity {
 
 
 
-    private boolean checkInput(String smsCode) {
-        String errorHint = null;
-        if(StringUtils.isEmpty(smsCode)){
-            errorHint = getString(R.string.registration_activity_confirm_code);
-        }
-        else{
-            int length = smsCode.length();
-            if(length <4 || length > 8){
-                errorHint = getString(R.string.registration_activity_confirm_code);
-            }
-        }
-
-        boolean result = errorHint == null;
-        if(!result){
-            etCode.requestFocus();
-            etCode.setError(errorHint);
-        }
-        return result;
+    private boolean checkInput() {
+        return ValidatorHelper.from(etCode)
+                .set(new EmptyValidator(getString(R.string.registration_activity_confirm_code)))
+                .and(new DigitLengthRangeValidator(getString(R.string.error_input_smscode_length),4,8))
+                .check(true);
 
     }
 }
