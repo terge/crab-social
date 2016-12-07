@@ -99,7 +99,7 @@ public class InputSmsCaptchaActivity extends AbsActivity {
     }
 
     private void onLoginSuccess(AVUser avUser){
-        startActivity(new Intent(this,MyProfileActivity.class));
+        startActivity(new Intent(this,YourNameActivity.class));
         finish();
     }
 

@@ -21,7 +21,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/FireballTheme">
         <activity
             android:name=".SplashActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
@@ -37,17 +37,16 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/FireballTheme.ConversationListActivity" />
         <activity
             android:name=".VerifyMobileActivity"
             android:label="@string/title_activity_verify_phone" />
-        <activity android:name=".MyProfileActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
-        <activity android:name=".InputSmsCaptchaActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
-
-
-
-
-
+        <activity
+            android:name=".YourNameActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".InputSmsCaptchaActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
         <!-- 实时通信模块、推送（均需要加入以下声明） START -->
         <!-- 实时通信模块、推送都要使用 PushService -->
@@ -78,7 +77,18 @@
         <activity
             android:name=".InputMobileActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-
+        <activity
+            android:name=".TimeLineActivity"
+            android:label="@string/title_activity_time_line"
+            android:parentActivityName="vip.xioix.crabbase.base.AbsActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="vip.xioix.crabbase.base.AbsActivity" />
+        </activity>
+        <activity android:name=".MyProfileActivity" />
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings"></activity>
     </application>
 
 </manifest>

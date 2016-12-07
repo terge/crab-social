@@ -67,7 +67,7 @@ public class InputMobileActivity extends AbsActivity {
     }
 
     private void onOldUserLogin(AVUser user) {
-        startActivity(new Intent(this,MyProfileActivity.class));
+        startActivity(new Intent(this,YourNameActivity.class));
     }
 
     private void onNewUserLogin(String mobile) {

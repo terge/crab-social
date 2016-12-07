@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0.0dip"
+        android:layout_weight="1.0">
+
+        <ImageButton
+            android:id="@id/help_button"
+            android:layout_width="@dimen/min_touch_target_size"
+            android:layout_height="@dimen/min_touch_target_size"
+            android:layout_gravity="end|center|top"
+            android:layout_marginTop="5.0dip"
+            android:background="?selectableItemBackgroundBorderless"
+            android:contentDescription="@string/action_help_and_feedback"
+            android:src="@drawable/ic_help_outline_24" />
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <ImageView
+                android:id="@+id/profile_image"
+                android:layout_width="@dimen/self_profile_image_size"
+                android:layout_height="@dimen/self_profile_image_size"
+                android:contentDescription="@string/self_profile_image_content_description"
+                android:src="@drawable/large_generic_avatar" />
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab_profile_capture"
+                android:layout_width="@dimen/fab_size"
+                android:layout_height="@dimen/fab_size"
+                android:layout_gravity="end|bottom|center"
+                android:layout_marginBottom="8.0dip"
+                android:layout_marginLeft="16.0dip"
+                android:layout_marginRight="16.0dip"
+                android:onClick="onCaptureClick"
+                android:contentDescription="@string/welcome_profile_back_to_selfie"
+                app:backgroundTint="#ffffffff" />
+        </FrameLayout>
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="60.0dip"
+        android:layout_gravity="bottom"
+        android:background="@color/quantum_cyan700"
+        android:theme="@style/Welcome.Theme.Dark">
+
+        <EditText
+            android:id="@+id/et_profile_name"
+            style="@style/Welcome.ProfileNameEditText"
+            android:layout_width="0.0dip"
+            android:layout_height="@dimen/min_touch_target_size"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="16.0dip"
+            android:layout_marginRight="16.0dip"
+            android:layout_weight="1.0"
+            android:background="@android:color/transparent"
+            android:hint="@string/your_name_text_hint"
+            android:inputType="textPersonName|textCapWords"
+            android:maxLength="@integer/max_profile_name_length"
+            android:textColorHint="#ccffffff" />
+
+        <Button
+            android:id="@+id/btn_profile_next"
+            style="@style/Welcome.Footer.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:drawableEnd="@drawable/quantum_ic_navigate_next_white_24"
+            android:drawableRight="@drawable/quantum_ic_navigate_next_white_24"
+            android:onClick="onNext"
+            android:text="@string/next"/>
+    </LinearLayout>
+</LinearLayout>

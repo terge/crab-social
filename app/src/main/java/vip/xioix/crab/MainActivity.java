@@ -1,7 +1,10 @@
 package vip.xioix.crab;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
@@ -10,17 +13,18 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.SparseArray;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.avos.avoscloud.feedback.FeedbackAgent;
+import com.avos.avoscloud.im.v2.AVIMClient;
+import com.avos.avoscloud.im.v2.AVIMException;
+import com.avos.avoscloud.im.v2.callback.AVIMClientCallback;
 import com.squareup.picasso.Picasso;
 
 import cn.leancloud.chatkit.LCCustomKey;
-import cn.leancloud.chatkit.activity.LCIMContactFragment;
 import cn.leancloud.chatkit.activity.LCIMConversationListFragment;
 import vip.xioix.crabbase.base.AbsActivity;
 
@@ -35,26 +39,50 @@ public class MainActivity extends AbsActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
+        toolbar.setNavigationIcon(R.drawable.ic_launcher);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         initHeadervew(navigationView.getHeaderView(0));
+
+        openIMClient();
+    }
+
+    private void openIMClient() {
+        Log.d(TAG, "openIMClient: ");
+        AVIMClient client = AVIMClient.getInstance(curUser.getObjectId());
+        client.open(new AVIMClientCallback() {
+            @Override
+            public void done(AVIMClient avimClient, AVIMException e) {
+                showConversationList();
+            }
+        });
+    }
+
+    private void showConversationList() {
+        Log.d(TAG, "showConversationList: ");
+        Fragment fg = new LCIMConversationListFragment();
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.content_main, fg, fg.getClass().getSimpleName());
+        transaction.addToBackStack(null);
+
+        transaction.commit();
     }
 
     private void initHeadervew(View headerView) {
@@ -88,27 +116,7 @@ public class MainActivity extends AbsActivity
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
     @Override
     public boolean onNavigationItemSelected(final MenuItem item) {
@@ -116,20 +124,20 @@ public class MainActivity extends AbsActivity
 
         if (!item.isChecked()) {
             switch (item.getItemId()) {
-                case R.id.nav_conversation:
-                case R.id.nav_contacts:
-                    showSelectFragment(getClickFragment(item.getItemId()));
+                case R.id.nav_profile:
+                    onProfileItemClick();
                     break;
                 case R.id.nav_timeline:
+                    onTimeLineItemClick();
                     break;
                 case R.id.nav_setting:
+                    onSettingItemClick();
                     break;
                 case R.id.nav_feedback:
-                    FeedbackAgent agent = new FeedbackAgent(mActivity);
-                    agent.startDefaultThreadActivity();
+                    onFeedbackItemClick();
                     break;
                 case R.id.nav_logout:
-                    App.appContext.logout();
+                    onLogoutItemClick();
                     break;
             }
         }
@@ -137,42 +145,28 @@ public class MainActivity extends AbsActivity
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
+        item.setChecked(false);
         return true;
     }
 
-
-    private Fragment getClickFragment(int itemId){
-        Fragment fg = fgList.get(itemId);
-        if(fg == null){
-            fg = createSelectFragment(itemId);
-        }
-        return fg;
+    private void onLogoutItemClick() {
+        App.appContext.logout();
     }
 
-    private void showSelectFragment(Fragment fg) {
-        Log.d(TAG, "showSelectFragment: ");
-        if(fg == null)return;
-
-        boolean isFragmentShowing = getSupportFragmentManager().findFragmentByTag(fg.getClass().getSimpleName()) == fg;
-        if(isFragmentShowing) return;
-
-
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.content_main, fg, fg.getClass().getSimpleName());
-        transaction.addToBackStack(null);
-
-        transaction.commit();
+    private void onFeedbackItemClick() {
+        FeedbackAgent agent = new FeedbackAgent(mActivity);
+        agent.startDefaultThreadActivity();
     }
 
-    private Fragment createSelectFragment(int id) {
-        Fragment fg = null;
+    private void onSettingItemClick() {
+        startActivity(new Intent(this,SettingsActivity.class));
+    }
 
-        if (id == R.id.nav_conversation) {
-            fg = new LCIMConversationListFragment();
-        } else if (id == R.id.nav_contacts) {
-            fg = new LCIMContactFragment();
-        }
-        Log.d(TAG, "createSelectFragment: id:" + id + " fg:" + (fg == null ? null : fg.getClass().getSimpleName()));
-        return fg;
+    private void onTimeLineItemClick() {
+        startActivity(new Intent(this,TimeLineActivity.class));
+    }
+
+    private void onProfileItemClick() {
+        startActivity(new Intent(this,MyProfileActivity.class));
     }
 }

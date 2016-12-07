@@ -1242,7 +1242,14 @@
         <item name="actionMenuTextColor">@color/action_bar_text_color</item>
         <item name="searchViewStyle">@style/FireballTheme.SearchView</item>
         <item name="titleTextColor">@color/action_bar_text_color</item>
+        <!--<item name="actionOverflowButtonStyle">@style/OverFlow</item>-->
     </style>
+
+
+    <!--<style name="OverFlow" parent="Widget.AppCompat.ActionButton.Overflow">-->
+        <!--<item name="android:src">@drawable/timeline</item>-->
+    <!--</style>-->
+
     <style name="FireballActionBarMenuTextStyle" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Menu">
         <item name="android:textSize">@dimen/navigation_text_size</item>
     </style>
