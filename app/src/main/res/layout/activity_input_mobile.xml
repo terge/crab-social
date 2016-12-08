@@ -56,12 +56,7 @@
                     android:inputType="phone"
                     android:textDirection="ltr" />
 
-                <TextView
-                    style="@style/Welcome.Subtitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="24dip"
-                    android:text="@string/registration_activity_pasword_hint" />
+
                 <android.support.v7.widget.AppCompatEditText
                     android:id="@+id/et_login_password"
                     style="@style/Welcome.EditText"

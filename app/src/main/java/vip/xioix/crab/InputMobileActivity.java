@@ -35,14 +35,11 @@ public class InputMobileActivity extends AbsActivity {
             String mobile = etMobile.getText().toString();
             String password = etPassword.getText().toString();
             tryLogin(mobile,password);
-//            queryUserInfo(mobile);
-            Intent intent = new Intent(this,InputSmsCaptchaActivity.class);
-            intent.putExtra(InputSmsCaptchaActivity.KEY_MOBILE,mobile);
-            startActivity(intent);
         }
     }
 
     private void tryLogin(final String mobile, final String password) {
+        Log.d(TAG, "tryLogin: ");
         AVUser.loginByMobilePhoneNumberInBackground(mobile, password, new LogInCallback<AVUser>() {
             @Override
             public void done(AVUser avUser, AVException e) {
@@ -53,7 +50,7 @@ public class InputMobileActivity extends AbsActivity {
                     if (e.getCode() == AVException.USER_DOESNOT_EXIST) {
                         register(mobile, password);
                     }else if(e.getCode() == AVException.USER_MOBILEPHONE_NOT_VERIFIED){
-                        toVerifyMobile(mobile);
+                        toVerifyMobile(mobile,false);
                     }else{
                         showError(e.getMessage());
                     }
@@ -62,10 +59,11 @@ public class InputMobileActivity extends AbsActivity {
         });
     }
 
-    private void toVerifyMobile(String mobile){
+    private void toVerifyMobile(String mobile,boolean isFromRegister){
         Log.d(TAG, "toVerifyMobile: ");
         Intent intent = new Intent(this, InputSmsCaptchaActivity.class);
-        intent.putExtra(VerifyMobileActivity.KEY_MOBILE, mobile);
+        intent.putExtra(InputSmsCaptchaActivity.KEY_MOBILE, mobile);
+        intent.putExtra(InputSmsCaptchaActivity.KEY_IS_FROM_REGISTER,isFromRegister);
         startActivity(intent);
         finish();
     }
@@ -81,7 +79,7 @@ public class InputMobileActivity extends AbsActivity {
     @Subscribe
     private void onRegisterSuccess(String mobile) {
         Log.d(TAG, "onRegisterSuccess: ");
-        toVerifyMobile(mobile);
+        toVerifyMobile(mobile,true);
     }
 
 
@@ -91,12 +89,13 @@ public class InputMobileActivity extends AbsActivity {
         user.setUsername(mMobile);
         user.setMobilePhoneNumber(mMobile);
         user.setPassword(mPassword);
-        user.put("channel","582c3513c4c9710054368976");
+        user.put("channel","5840012f128fe1006c36c117");
         user.signUpInBackground(new SignUpCallback() {
             @Override
             public void done(AVException e) {
                 if(e == null){
                     //onRegisterSuccess
+                    AVUser.getCurrentUser().setUsername("");
                     mEventBus.post(mMobile);
                 }
             }

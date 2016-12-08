@@ -22,7 +22,9 @@ import vip.xioix.crabbase.util.validate.ValidatorHelper;
 
 public class InputSmsCaptchaActivity extends AbsActivity {
     public static final String KEY_MOBILE = "mobile";
+    public static final String KEY_IS_FROM_REGISTER = "isFromRegister";
     private String mMobile;
+    private boolean isFromRegister = false;
     private EditText etCode;
     private TextView tvCountDown;
     @Override
@@ -31,11 +33,13 @@ public class InputSmsCaptchaActivity extends AbsActivity {
         setContentView(R.layout.activity_input_sms_captcha);
         mMobile = getIntent().getStringExtra(KEY_MOBILE);
         Check.d(mMobile!=null,"lost mobile argument");
+        isFromRegister = getIntent().getBooleanExtra(KEY_IS_FROM_REGISTER,false);
 
         String confirStr = String.format(getString(R.string.registration_activity_confirm_code_details),mMobile);
         ((TextView)findViewById(R.id.confirm_code_details)).setText(confirStr);
         etCode = (EditText) findViewById(R.id.pincode_edittext);
         tvCountDown = (TextView) findViewById(R.id.get_new_code_or_wait);
+        if(!isFromRegister)requestSmsCode();
     }
 
 
@@ -44,7 +48,6 @@ public class InputSmsCaptchaActivity extends AbsActivity {
         @Override
         public void run() {
             if(countDownSecond != 0){
-                Log.d(TAG, "run: 1");
                 String str = "请稍候  "+"<b><font color=\"#00acc1\">"+(countDownSecond --)+"</font></b>";
                 tvCountDown.setText(Html.fromHtml(str));
                 UIHandler.postDelayed(this,1000);
@@ -52,7 +55,6 @@ public class InputSmsCaptchaActivity extends AbsActivity {
             }
 
             else {
-                Log.d(TAG, "run: 2");
                 tvCountDown.setText(Html.fromHtml("<b><font color=\"#6200ea\">获取新的验证码</font></b>"));
                 tvCountDown.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -104,8 +106,6 @@ public class InputSmsCaptchaActivity extends AbsActivity {
                 onVerifySuccess();
             }
         });
-
-
     }
 
     private void onVerifySuccess(){
@@ -124,6 +124,5 @@ public class InputSmsCaptchaActivity extends AbsActivity {
                 .set(new EmptyValidator(getString(R.string.registration_activity_confirm_code)))
                 .and(new DigitLengthRangeValidator(getString(R.string.error_input_smscode_length),4,8))
                 .check(true);
-
     }
 }
