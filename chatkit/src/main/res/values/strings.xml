@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="default_username">苍老师</string>
+    <string name="default_msg_content">瞅你咋地,是不服咋地?是不是不服?</string>
+    <string name="default_timestamp">20:08</string>
 </resources>
