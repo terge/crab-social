@@ -4,9 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -43,8 +41,7 @@ public class MainActivity extends AbsActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                startActivity(new Intent(mActivity, ContactActivity.class));
             }
         });
 
@@ -77,20 +74,18 @@ public class MainActivity extends AbsActivity
     private void showConversationList() {
         Log.d(TAG, "showConversationList: ");
         Fragment fg = new LCIMConversationListFragment();
-
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.content_main, fg, fg.getClass().getSimpleName());
-        transaction.commit();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.content_main, fg, fg.getClass().getSimpleName())
+                .commit();
     }
 
     private void initHeadervew(View headerView) {
-
         Object url = curUser.get(LCCustomKey.AVATAR_URL);
-        if(url != null){
+        if (url != null) {
             ImageView ivAvatar = (ImageView) headerView.findViewById(R.id.iv_header_avatar);
             Picasso.with(this)
                     .load((String) curUser.get(LCCustomKey.AVATAR_URL))
-                    .resize(60,60)
+                    .resize(60, 60)
                     .centerCrop()
                     .into(ivAvatar);
         }
@@ -113,7 +108,6 @@ public class MainActivity extends AbsActivity
             super.onBackPressed();
         }
     }
-
 
 
     @Override
@@ -157,14 +151,14 @@ public class MainActivity extends AbsActivity
     }
 
     private void onSettingItemClick() {
-        startActivity(new Intent(this,SettingsActivity.class));
+        startActivity(new Intent(this, SettingsActivity.class));
     }
 
     private void onTimeLineItemClick() {
-        startActivity(new Intent(this,TimeLineActivity.class));
+        startActivity(new Intent(this, TimeLineActivity.class));
     }
 
     private void onProfileItemClick() {
-        startActivity(new Intent(this,MyProfileActivity.class));
+        startActivity(new Intent(this, MyProfileActivity.class));
     }
 }

@@ -46,7 +46,7 @@ public class UserProvider implements LCChatProfileProvider {
     @Override
     public List<LCChatKitUser> getUserCache() {
         if(partUsers.size() == 0){
-            LCChatKitUser master = new LCChatKitUser("582befb4128fe100694aff1e","David",null);
+            LCChatKitUser master = new LCChatKitUser("5847b1fa61ff4b0058a22b59","郭大燕","http://ac-tgika9an.clouddn.com/3bf43a9ba6d2fcbe23f3.png");
             partUsers.add(master);
         }
         return partUsers;

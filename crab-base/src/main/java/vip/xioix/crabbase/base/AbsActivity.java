@@ -35,6 +35,12 @@ public class AbsActivity extends AppCompatActivity {
         mEventBus.register(this);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mEventBus.unregister(this);
+    }
+
     private void setUpStatusBarColor() {
         int color = requireStatuBarColor();
         if(color == -1) return;

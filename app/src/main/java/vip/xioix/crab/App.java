@@ -4,7 +4,6 @@ import android.app.Application;
 import android.content.Intent;
 
 import com.avos.avoscloud.AVAnalytics;
-import com.avos.avoscloud.AVOSCloud;
 import com.avos.avoscloud.AVOnlineConfigureListener;
 import com.avos.avoscloud.AVUser;
 
@@ -39,7 +38,7 @@ public class App extends Application{
         LCChatKit.getInstance().setProfileProvider(new UserProvider());
         LCChatKit.getInstance().init(appContext,appId,appKey);
 //        AVOSCloud.initialize(this,appId,appKey);
-        AVOSCloud.setDebugLogEnabled(true);
+//        AVOSCloud.setDebugLogEnabled(true);
         refreshRemoteConfig();
         UIHandler.initialize();
     }

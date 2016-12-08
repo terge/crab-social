@@ -35,7 +35,6 @@
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/FireballTheme.ConversationListActivity" />
-
         <activity
             android:name=".YourNameActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
@@ -83,7 +82,8 @@
         <activity android:name=".MyProfileActivity" />
         <activity
             android:name=".SettingsActivity"
-            android:label="@string/title_activity_settings"></activity>
+            android:label="@string/title_activity_settings" />
+        <activity android:name=".ContactActivity"></activity>
     </application>
 
 </manifest>
