@@ -32,15 +32,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LoginActivity"
-            android:label="@string/title_activity_login" />
-        <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/FireballTheme.ConversationListActivity" />
-        <activity
-            android:name=".VerifyMobileActivity"
-            android:label="@string/title_activity_verify_phone" />
+
         <activity
             android:name=".YourNameActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
