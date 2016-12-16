@@ -12,7 +12,7 @@ public class OrValidator extends MultiValidator {
 
     public OrValidator(String message, Validator... validators) {
         super(message, validators);
-        if(message == null) errorMessage = "写的什么鬼啊,全都错了";
+        if(message == null) errorMessage = "输入有误";
     }
 
     public OrValidator(Validator... validators) {
